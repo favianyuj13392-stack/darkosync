@@ -1,5 +1,5 @@
 // src/components/interactive/DiagnosticForm.tsx
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -14,6 +14,20 @@ interface FormData {
   website: string;
   consent: boolean;
 }
+
+interface TurnstileApi {
+  render: (container: HTMLElement, options: {
+    sitekey: string;
+    theme: 'dark';
+    callback: (token: string) => void;
+    'expired-callback': () => void;
+    'error-callback': () => void;
+  }) => string;
+  reset: (widgetId: string) => void;
+  remove: (widgetId: string) => void;
+}
+
+type TurnstileWindow = Window & { turnstile?: TurnstileApi };
 
 const INITIAL_DATA: FormData = {
   need: '',
@@ -33,8 +47,47 @@ export default function DiagnosticForm() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [pending, setPending] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
   const requestId = useRef<string | null>(null);
+  const turnstileContainer = useRef<HTMLDivElement | null>(null);
+  const turnstileWidgetId = useRef<string | null>(null);
   const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+
+  useEffect(() => {
+    if (step !== 4 || !turnstileSiteKey) return;
+
+    let cancelled = false;
+    let retryTimer: number | undefined;
+
+    const renderTurnstile = () => {
+      if (cancelled || turnstileWidgetId.current) return;
+
+      const turnstile = (window as TurnstileWindow).turnstile;
+      if (!turnstile || !turnstileContainer.current) {
+        retryTimer = window.setTimeout(renderTurnstile, 100);
+        return;
+      }
+
+      turnstileWidgetId.current = turnstile.render(turnstileContainer.current, {
+        sitekey: turnstileSiteKey,
+        theme: 'dark',
+        callback: setTurnstileToken,
+        'expired-callback': () => setTurnstileToken(''),
+        'error-callback': () => setTurnstileToken(''),
+      });
+    };
+
+    renderTurnstile();
+
+    return () => {
+      cancelled = true;
+      if (retryTimer !== undefined) window.clearTimeout(retryTimer);
+      const widgetId = turnstileWidgetId.current;
+      if (widgetId) (window as TurnstileWindow).turnstile?.remove(widgetId);
+      turnstileWidgetId.current = null;
+      setTurnstileToken('');
+    };
+  }, [step, turnstileSiteKey]);
 
   const markEdited = () => {
     if (requestId.current) requestId.current = null;
@@ -105,7 +158,6 @@ export default function DiagnosticForm() {
     setSubmitError('');
     requestId.current ??= crypto.randomUUID();
     try {
-      const turnstileToken = e.currentTarget.querySelector<HTMLInputElement>('input[name="cf-turnstile-response"]')?.value;
       if (!turnstileToken) throw new Error('Completa la verificaci\u00f3n de seguridad.');
       const response = await fetch('/api/leads', {
         method: 'POST', headers: { 'content-type': 'application/json' },
@@ -117,7 +169,11 @@ export default function DiagnosticForm() {
       window.location.assign(result.whatsapp_url);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'No pudimos guardar tu solicitud. Inténtalo nuevamente.');
-      (window as Window & { turnstile?: { reset: () => void } }).turnstile?.reset();
+      const widgetId = turnstileWidgetId.current;
+      if (widgetId) {
+        (window as TurnstileWindow).turnstile?.reset(widgetId);
+        setTurnstileToken('');
+      }
     } finally {
       setPending(false);
     }
@@ -317,7 +373,7 @@ export default function DiagnosticForm() {
                 <span>Acepto que DarkoSync procese estos datos y comparta el diagn&oacute;stico y contacto enviados con WhatsApp/Meta para abrir la conversaci&oacute;n.</span>
               </label>
               {errors.consent && <span className="text-[10px] text-red-400 font-semibold">{errors.consent}</span>}
-              {turnstileSiteKey ? <div className="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="dark"></div> : <p role="alert" className="text-xs text-red-400">Verificaci&oacute;n no disponible.</p>}
+              {turnstileSiteKey ? <div ref={turnstileContainer}></div> : <p role="alert" className="text-xs text-red-400">Verificaci&oacute;n no disponible.</p>}
               {submitError && <p role="alert" className="mt-4 text-xs text-red-400 font-semibold">{submitError}</p>}
             </div>
 
