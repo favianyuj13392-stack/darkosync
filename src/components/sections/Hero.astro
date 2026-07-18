@@ -1,0 +1,117 @@
+---
+// src/components/sections/Hero.astro
+---
+
+<section id="hero" class="relative flex min-h-[90vh] w-full items-center justify-center overflow-hidden pt-32 pb-20 md:min-h-screen md:pt-40">
+  <!-- Infrastructure Pulse Canvas Overlay (Technical grid backdrop) -->
+  <div class="pointer-events-none absolute inset-0 z-0 select-none opacity-30 transition-opacity duration-1000 hero-grid-container" id="grid-spotlight">
+    <!-- Static Grid Lines -->
+    <div class="absolute inset-0 bg-grid-pattern"></div>
+    <!-- Interactive Spotlight Overlay containing hidden technical details -->
+    <div class="spotlight-layer absolute inset-0 bg-grid-reveal opacity-0 md:opacity-100">
+      <!-- Floating data points that align with the grid intersection -->
+      <div class="absolute top-[30%] left-[25%] text-[10px] font-mono text-[var(--color-accent)] opacity-60 tracking-wider">REPLICA-01 // OK</div>
+      <div class="absolute top-[45%] left-[65%] text-[10px] font-mono text-[var(--color-accent)] opacity-60 tracking-wider">LATENCY // 38ms</div>
+      <div class="absolute top-[70%] left-[40%] text-[10px] font-mono text-[var(--color-accent)] opacity-60 tracking-wider">STATUS // 200_OK</div>
+      <div class="absolute top-[20%] left-[80%] text-[10px] font-mono text-[var(--color-accent)] opacity-60 tracking-wider">MEM_USAGE // 42%</div>
+    </div>
+  </div>
+
+  <!-- Radial gradient to fade grids on edges -->
+  <div class="pointer-events-none absolute inset-0 z-0 bg-radial-vignette"></div>
+
+  <!-- Content Container -->
+  <div class="relative z-10 mx-auto w-full max-w-5xl px-6 text-center md:px-8">
+    <!-- Eyebrow -->
+    <p class="inline-flex items-center gap-2 rounded-full border border-[rgba(50,255,126,0.15)] bg-[rgba(50,255,126,0.05)] px-4 py-1.5 text-xs font-semibold tracking-[0.2em] text-[var(--color-accent)] uppercase">
+      <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
+      Backend · IA aplicada · E-commerce a medida
+    </p>
+
+    <!-- Title -->
+    <h1 class="mt-8 text-4xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl leading-[1.1]">
+      Ingeniería que mantiene tu <br class="hidden sm:inline" />
+      <span class="bg-gradient-to-r from-white via-white to-[var(--color-accent)] bg-clip-text text-transparent">
+        negocio en movimiento
+      </span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="mx-auto mt-8 max-w-3xl text-base leading-relaxed text-[var(--color-text-muted)] sm:text-xl sm:leading-relaxed">
+      Diseñamos sistemas robustos a medida, soluciones de inteligencia artificial aplicada y plataformas de e-commerce de alta disponibilidad preparadas para crecer en Bolivia sin fricciones.
+    </p>
+
+    <!-- CTAs -->
+    <div class="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+      <a href="#diagnostico" class="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-accent)] px-8 py-4 text-base font-bold text-black transition-all duration-300 hover:scale-[1.02] hover:bg-white sm:w-auto">
+        <span>Comenzar Diagnóstico</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1">
+          <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.22 5.03a.75.75 0 111.06-1.06l5.5 5.5a.75.75 0 010 1.06l-5.5 5.5a.75.75 0 11-1.06-1.06l4.168-4.17H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
+        </svg>
+      </a>
+      <a href="#pipeline" class="group flex w-full items-center justify-center gap-2 rounded-xl border border-[rgba(255,255,255,0.12)] bg-[rgba(255,255,255,0.02)] px-8 py-4 text-base font-bold text-white transition-all duration-300 hover:border-white hover:bg-[rgba(255,255,255,0.06)] sm:w-auto">
+        <span>Ver cómo trabajamos</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <polyline points="19 12 12 19 5 12"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Custom Backgrounds & Grids using pure CSS features */
+  .bg-grid-pattern {
+    background-size: 60px 60px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  }
+
+  .bg-grid-reveal {
+    background-size: 60px 60px;
+    background-image: 
+      linear-gradient(to right, rgba(50, 255, 126, 0.15) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(50, 255, 126, 0.15) 1px, transparent 1px);
+    mask-image: radial-gradient(circle 180px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 20%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle 180px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 20%, transparent 80%);
+  }
+
+  .bg-radial-vignette {
+    background: radial-gradient(circle at center, transparent 30%, #0b0f13 90%);
+  }
+
+  /* Keyframe animation for the data points */
+  @keyframes blink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+  }
+
+  .hero-grid-container div[class*="absolute"] {
+    animation: blink 4s infinite ease-in-out;
+  }
+  .hero-grid-container div[class*="absolute"]:nth-child(2n) {
+    animation-delay: 2s;
+  }
+</style>
+
+<script>
+  const hero = document.getElementById('hero');
+  const spotlight = document.querySelector('.spotlight-layer') as HTMLElement;
+
+  if (hero && spotlight) {
+    // Only track cursor spotlight on devices with hover interaction capabilities (precision pointing)
+    const mediaQuery = window.matchMedia('(hover: hover)');
+    
+    if (mediaQuery.matches) {
+      hero.addEventListener('mousemove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        spotlight.style.setProperty('--mouse-x', `${x}px`);
+        spotlight.style.setProperty('--mouse-y', `${y}px`);
+      });
+    }
+  }
+</script>
