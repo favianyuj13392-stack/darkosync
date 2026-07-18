@@ -87,7 +87,23 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
     body: JSON.stringify(lead),
     signal: AbortSignal.timeout(8_000),
   }).catch(() => null);
-  if (!saved?.ok) return json({ error: 'Could not save your request. Please retry.' }, 502);
+  if (!saved?.ok) {
+    const upstreamStatus = saved?.status ?? 0;
+    const code = upstreamStatus === 0 ? 'LEAD_STORE_UNREACHABLE'
+      : upstreamStatus === 401 || upstreamStatus === 403 ? 'LEAD_STORE_AUTH'
+      : upstreamStatus === 404 ? 'LEAD_STORE_SCHEMA'
+      : upstreamStatus === 409 ? 'LEAD_STORE_CONFLICT'
+      : upstreamStatus === 400 || upstreamStatus === 422 ? 'LEAD_STORE_REJECTED'
+      : upstreamStatus >= 500 ? 'LEAD_STORE_UPSTREAM'
+      : 'LEAD_STORE_UNKNOWN';
+    console.error(JSON.stringify({
+      event: 'lead_persistence_failed',
+      reference: body.request_id,
+      upstream_status: upstreamStatus,
+      code,
+    }));
+    return json({ error: 'Could not save your request. Please retry.', code, reference: body.request_id }, 502);
+  }
   const message = `*SOLICITUD DE DIAGNÓSTICO - DARKOSYNC*\n\n• *Nombre:* ${lead.name}\n• *Empresa:* ${lead.company}\n• *WhatsApp:* ${lead.phone}\n• *Email:* ${lead.email}\n\n• *Necesidad:* ${lead.need}\n• *Etapa:* ${lead.project_stage}\n• *Cuello de botella:* ${lead.bottleneck}`;
   return json({ whatsapp_url: `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}` });
 };
