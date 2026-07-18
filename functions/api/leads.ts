@@ -1,6 +1,6 @@
 interface Env {
   SUPABASE_URL?: string;
-  SUPABASE_SERVICE_ROLE_KEY?: string;
+  SUPABASE_SECRET_KEY?: string;
   WHATSAPP_NUMBER?: string;
   TURNSTILE_SECRET_KEY?: string;
 }
@@ -22,10 +22,10 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
     return json({ error: 'JSON required.' }, 415);
   }
   const supabaseUrl = env.SUPABASE_URL?.replace(/\/+$/, '');
-  const serviceKey = env.SUPABASE_SERVICE_ROLE_KEY;
+  const secretKey = env.SUPABASE_SECRET_KEY;
   const whatsapp = env.WHATSAPP_NUMBER;
   const turnstileSecret = env.TURNSTILE_SECRET_KEY;
-  if (!supabaseUrl || !serviceKey || !turnstileSecret || whatsapp !== '59163125963') {
+  if (!supabaseUrl || !secretKey || !turnstileSecret || whatsapp !== '59163125963') {
     return json({ error: 'Service unavailable.' }, 503);
   }
   const declaredSize = Number(request.headers.get('content-length') || 0);
@@ -81,7 +81,7 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
   const saved = await fetch(`${supabaseUrl}/rest/v1/leads?on_conflict=request_id`, {
     method: 'POST',
     headers: {
-      apikey: serviceKey, authorization: `Bearer ${serviceKey}`, 'content-type': 'application/json',
+      apikey: secretKey, 'content-type': 'application/json',
       prefer: 'resolution=ignore-duplicates,return=minimal',
     },
     body: JSON.stringify(lead),
