@@ -81,7 +81,9 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
   const saved = await fetch(`${supabaseUrl}/rest/v1/leads?on_conflict=request_id`, {
     method: 'POST',
     headers: {
-      apikey: secretKey, 'content-type': 'application/json',
+      apikey: secretKey,
+      Authorization: `Bearer ${secretKey}`,
+      'content-type': 'application/json',
       prefer: 'resolution=ignore-duplicates,return=minimal',
     },
     body: JSON.stringify(lead),
