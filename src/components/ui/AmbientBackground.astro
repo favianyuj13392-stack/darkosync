@@ -1,0 +1,245 @@
+---
+// Global ambient motion: visible movement without competing with page content.
+---
+
+<div id="ds-ambient-bg" class="ambient-background" aria-hidden="true">
+  <div class="ambient-field">
+    <div class="ambient-orb ambient-orb--emerald"></div>
+    <div class="ambient-orb ambient-orb--petrol"></div>
+    <div class="ambient-orb ambient-orb--light"></div>
+    <div class="ambient-ribbon"></div>
+  </div>
+  <div class="ambient-pointer"></div>
+  <div class="ambient-vignette"></div>
+  <div class="ambient-noise"></div>
+</div>
+
+<style>
+  .ambient-background {
+    --ambient-opacity: 0.64;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--ds-bg);
+    isolation: isolate;
+    contain: paint;
+  }
+
+  .ambient-field {
+    position: absolute;
+    inset: 0;
+    opacity: var(--ambient-opacity);
+    transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .ambient-orb {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+
+  .ambient-orb--emerald {
+    top: -42vmax;
+    left: -34vmax;
+    width: 78vmax;
+    height: 78vmax;
+    background: radial-gradient(
+      circle,
+      rgba(50, 255, 126, 0.34) 0%,
+      rgba(50, 255, 126, 0.16) 30%,
+      rgba(50, 255, 126, 0.045) 52%,
+      transparent 72%
+    );
+    animation: emerald-orbit 17s ease-in-out infinite;
+  }
+
+  .ambient-orb--petrol {
+    right: -38vmax;
+    bottom: -42vmax;
+    width: 82vmax;
+    height: 82vmax;
+    background: radial-gradient(
+      circle,
+      rgba(10, 138, 155, 0.3) 0%,
+      rgba(10, 105, 126, 0.14) 32%,
+      rgba(10, 105, 126, 0.04) 54%,
+      transparent 73%
+    );
+    animation: petrol-orbit 23s ease-in-out infinite;
+  }
+
+  .ambient-orb--light {
+    top: -24vmax;
+    right: 8vw;
+    width: 48vmax;
+    height: 48vmax;
+    background: radial-gradient(
+      circle,
+      rgba(240, 242, 238, 0.16) 0%,
+      rgba(240, 242, 238, 0.055) 38%,
+      transparent 70%
+    );
+    animation: light-orbit 19s ease-in-out infinite;
+  }
+
+  .ambient-ribbon {
+    position: absolute;
+    left: -35vw;
+    top: 32vh;
+    width: 170vw;
+    height: 28vh;
+    background: linear-gradient(
+      90deg,
+      transparent 12%,
+      rgba(50, 255, 126, 0.02) 30%,
+      rgba(50, 255, 126, 0.12) 48%,
+      rgba(19, 128, 145, 0.09) 60%,
+      transparent 82%
+    );
+    transform: rotate(-11deg) translate3d(-20%, 0, 0);
+    transform-origin: center;
+    will-change: transform, opacity;
+    animation: ribbon-sweep 13s ease-in-out infinite alternate;
+  }
+
+  .ambient-pointer {
+    --pointer-x: 50%;
+    --pointer-y: 35%;
+    position: absolute;
+    inset: 0;
+    opacity: 0.78;
+    background: radial-gradient(
+      circle 30rem at var(--pointer-x) var(--pointer-y),
+      rgba(50, 255, 126, 0.09),
+      rgba(18, 116, 130, 0.035) 38%,
+      transparent 72%
+    );
+  }
+
+  .ambient-vignette {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(10, 12, 15, 0.05), transparent 18%, transparent 82%, rgba(10, 12, 15, 0.36)),
+      radial-gradient(ellipse 115% 92% at 50% 45%, transparent 45%, rgba(10, 12, 15, 0.44) 100%);
+  }
+
+  .ambient-noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.028;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.72'/%3E%3C/svg%3E");
+  }
+
+  @keyframes emerald-orbit {
+    0%   { transform: translate3d(0, 0, 0) scale(0.96); }
+    32%  { transform: translate3d(34vw, 18vh, 0) scale(1.1); }
+    68%  { transform: translate3d(18vw, 58vh, 0) scale(0.9); }
+    100% { transform: translate3d(-4vw, 26vh, 0) scale(1.03); }
+  }
+
+  @keyframes petrol-orbit {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    40%  { transform: translate3d(-42vw, -18vh, 0) scale(1.12); }
+    72%  { transform: translate3d(-24vw, -54vh, 0) scale(0.92); }
+    100% { transform: translate3d(8vw, -24vh, 0) scale(1.06); }
+  }
+
+  @keyframes light-orbit {
+    0%   { transform: translate3d(0, 0, 0) scale(0.88); opacity: 0.5; }
+    45%  { transform: translate3d(-30vw, 32vh, 0) scale(1.08); opacity: 0.85; }
+    100% { transform: translate3d(12vw, 58vh, 0) scale(0.94); opacity: 0.58; }
+  }
+
+  @keyframes ribbon-sweep {
+    from { transform: rotate(-11deg) translate3d(-24%, -5vh, 0); opacity: 0.42; }
+    to   { transform: rotate(-7deg) translate3d(20%, 12vh, 0); opacity: 0.9; }
+  }
+
+  @media (max-width: 767px) {
+    .ambient-background { --ambient-opacity: 0.5; }
+    .ambient-orb--emerald,
+    .ambient-orb--petrol { width: 105vmax; height: 105vmax; }
+    .ambient-pointer { display: none; }
+    .ambient-ribbon { height: 20vh; animation-duration: 16s; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ambient-orb,
+    .ambient-ribbon { animation: none !important; }
+    .ambient-pointer { display: none; }
+    .ambient-field { transition: none; }
+  }
+</style>
+
+<script>
+  const background = document.getElementById('ds-ambient-bg');
+
+  if (background) {
+    const opacityMap: Record<string, string> = {
+      hero: '0.66',
+      evidencia: '0.38',
+      casos: '0.48',
+      problemas: '0.42',
+      capacidades: '0.52',
+      'editorial-break': '0.34',
+      flujo: '0.58',
+      proceso: '0.46',
+      diagnostico: '0.54',
+      faq: '0.4',
+    };
+
+    const sections = Array.from(
+      document.querySelectorAll<HTMLElement>('section[id], main > div[id]'),
+    ).filter((section) => section.id in opacityMap);
+
+    const ratios = new Map<Element, number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => ratios.set(entry.target, entry.intersectionRatio));
+
+        const active = sections.reduce<HTMLElement | null>((current, section) => {
+          if (!current) return section;
+          return (ratios.get(section) ?? 0) > (ratios.get(current) ?? 0) ? section : current;
+        }, null);
+
+        if (active && (ratios.get(active) ?? 0) > 0) {
+          background.style.setProperty('--ambient-opacity', opacityMap[active.id]);
+        }
+      },
+      { threshold: [0, 0.15, 0.3, 0.5, 0.7] },
+    );
+
+    sections.forEach((section) => {
+      ratios.set(section, 0);
+      observer.observe(section);
+    });
+
+    const pointerLayer = background.querySelector<HTMLElement>('.ambient-pointer');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+
+    if (pointerLayer && !reducedMotion && finePointer) {
+      let frame = 0;
+      let pointerX = 50;
+      let pointerY = 35;
+
+      window.addEventListener('pointermove', (event) => {
+        pointerX = (event.clientX / window.innerWidth) * 100;
+        pointerY = (event.clientY / window.innerHeight) * 100;
+
+        if (frame) return;
+        frame = window.requestAnimationFrame(() => {
+          pointerLayer.style.setProperty('--pointer-x', `${pointerX.toFixed(2)}%`);
+          pointerLayer.style.setProperty('--pointer-y', `${pointerY.toFixed(2)}%`);
+          frame = 0;
+        });
+      }, { passive: true });
+    }
+  }
+</script>

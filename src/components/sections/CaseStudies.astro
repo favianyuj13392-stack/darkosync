@@ -1,65 +1,369 @@
 ---
 // src/components/sections/CaseStudies.astro
+
+const projects = [
+  {
+    id: "planificacion-cientifica",
+    title: "PlanificacionCientifica SRL",
+    sector: "E-Commerce & E-Learning",
+    situation: "Venta manual de libros y cursos dispersos sin control centralizado de alumnos.",
+    bottleneck: "Dificultad para procesar pagos internacionales (tarjetas de crédito) e integrarse con pasarelas locales bolivianas (QR, Tigo Money) para facturación automática.",
+    solution: "Plataforma LMS integrada con e-commerce. Implementación de checkout internacional y pasarela local multifacética (QR, tarjetas, Tigo Money) automatizando la generación de facturas y el acceso inmediato a los cursos.",
+    results: "Reducción del 95% en el tiempo de habilitación de alumnos. Incremento del 40% en ventas internacionales gracias a la pasarela multi-moneda.",
+    link: "https://planificacioncientifica.com",
+    slides: [
+      { img: "/assets/cases/planificacion-cientifica-1.png", label: "Catálogo de cursos y área de aprendizaje del alumno" },
+      { img: "/assets/cases/planificacion-cientifica-2.png", label: "Reproductor de clases de alta velocidad y temarios interactivos" },
+      { img: "/assets/cases/planificacion-cientifica-3.png", label: "Pasarela de facturación y checkout nacional e internacional" }
+    ]
+  },
+  {
+    id: "animalvet",
+    title: "AnimalVet Clinic",
+    sector: "Salud Veterinaria & Retail",
+    situation: "Clínica veterinaria y pet shop operando de forma aislada, causando descontrol en el stock de vacunas y medicamentos y retrasos en consultas.",
+    bottleneck: "Pérdida de trazabilidad en el historial clínico, errores en la facturación de hospitalizaciones y demoras en el POS de caja por conciliación manual.",
+    solution: "Sistema integral veterinario con historial clínico centralizado, módulo POS integrado para control de stock en caja, y tarjeta de control zoosanitario digitalizada con alertas de vacunación automática.",
+    results: "Trazabilidad completa de pacientes, 0% discrepancia en stock de medicamentos y reducción del 50% en el tiempo de facturación en caja.",
+    link: "#",
+    slides: [
+      { img: "/assets/cases/animalvet-1.png", label: "Buscador global de historias clínicas y expedientes de mascotas" },
+      { img: "/assets/cases/animalvet-2.png", label: "POS de caja integrado con inventario de productos y servicios" },
+      { img: "/assets/cases/animalvet-3.png", label: "Gestión de hospitalizaciones y liquidación detallada de insumos" },
+      { img: "/assets/cases/animalvet-4.png", label: "Control de vacunas y tarjeta zoosanitaria digital" }
+    ]
+  },
+  {
+    id: "fundacion-nuestra-esperanza",
+    title: "Fundación Nuestra Esperanza",
+    sector: "Fintech & ONG",
+    situation: "Dependencia de plataformas externas con altas comisiones y nula capacidad de personalización del diseño de la web.",
+    bottleneck: "Conciliación manual lenta de donaciones por transferencia. Falta de emisión inmediata de certificados de donación deducibles de impuestos.",
+    solution: "Portal web autogestionable con CMS sin código. Pasarela QR integrada con la red bancaria nacional de Bolivia mediante webhooks en tiempo real, activando la generación de certificados en PDF firmados digitalmente.",
+    results: "Notificación de transferencias en menos de 3 segundos. Campañas de recaudación modificadas en minutos sin tocar código.",
+    link: "https://fundacion-nuestra-esperanza.cloud",
+    slides: [
+      { img: "/assets/cases/donaciones-1.png", label: "Plataforma de inicio y campañas de donación personalizadas" },
+      { img: "/assets/cases/donaciones-2.png", label: "Generador dinámico de códigos QR para aportes inmediatos" },
+      { img: "/assets/cases/donaciones-3.png", label: "Panel CMS administrativo para editar contenido sin tocar código" }
+    ]
+  },
+  {
+    id: "darkogym",
+    title: "DarkoGym",
+    sector: "Fitness & Control de Accesos",
+    situation: "Gimnasio con alto tráfico registrando accesos y membresías en cuadernos y hojas de cálculo manuales.",
+    bottleneck: "Ingreso de miembros con cuotas vencidas no detectados a tiempo. Filas de espera en recepción en horas pico.",
+    solution: "Software de administración de membresías con control de acceso integrado mediante credenciales de proximidad RFID y bases de datos centralizadas en tiempo real.",
+    results: "Validación de acceso en menos de 1 segundo. Cero filas en recepción y 100% de efectividad en cobro de membresías vencidas.",
+    link: "#",
+    slides: [
+      { img: "/assets/cases/darkogym-1.png", label: "Panel principal de administración de miembros y membresías" },
+      { img: "/assets/cases/darkogym-2.png", label: "Visualizador de estado de cuenta y alertas de vencimiento" },
+      { img: "/assets/cases/darkogym-3.png", label: "Log de ingresos en tiempo real conectado al lector RFID físico" }
+    ]
+  }
+];
 ---
 
-<section id="casos" class="relative py-24 md:py-32 ds-reveal">
+<section id="casos" class="relative py-24 md:py-32 ds-reveal relative z-10">
   <div class="mx-auto max-w-7xl px-6 md:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-24">
-      
-      <!-- Left: Metadata -->
-      <aside class="flex flex-col gap-6 md:sticky md:top-32 h-fit">
-        <div>
-          <span class="text-xs font-semibold tracking-wider text-[var(--ds-muted)] uppercase">Caso de estudio</span>
-          <h2 class="mt-2 text-2xl font-bold text-[var(--ds-text)] font-display">DarkoGym</h2>
-        </div>
-        <div class="h-px w-full bg-[var(--ds-border)]"></div>
-        <div>
-          <span class="text-xs font-semibold tracking-wider text-[var(--ds-muted)] uppercase">Sector</span>
-          <p class="mt-1 text-sm text-[var(--ds-text)]">Fitness / Gestión de accesos</p>
-        </div>
-      </aside>
-
-      <!-- Right: Narrative -->
-      <article class="flex flex-col gap-12">
-        <section>
-          <h3 class="text-lg font-bold text-[var(--ds-text)] mb-3">Situación inicial</h3>
-          <p class="text-[var(--ds-muted)] leading-relaxed">
-            Gimnasio con crecimiento acelerado administrando accesos y cobros en planillas de Excel y cuadernos físicos.
-          </p>
-        </section>
-
-        <section>
-          <h3 class="text-lg font-bold text-[var(--ds-text)] mb-3">Cuello de botella</h3>
-          <p class="text-[var(--ds-muted)] leading-relaxed">
-            Ingresos de miembros con cuotas vencidas no detectados en tiempo real. Registro manual demorando más de 2 minutos por persona en horarios pico.
-          </p>
-        </section>
-
-        <!-- Placeholder for image -->
-        <div class="w-full flex items-center justify-center p-8 border border-dashed border-[var(--ds-border)] bg-[var(--ds-accent-dim)] rounded-lg min-h-[300px]">
-          <p class="text-sm text-[var(--ds-accent)] font-mono text-center max-w-sm">
-            Captura de pantalla del sistema: <br/>[PENDIENTE — requiere autorización del cliente]
-          </p>
-        </div>
-
-        <section>
-          <h3 class="text-lg font-bold text-[var(--ds-text)] mb-3">Solución</h3>
-          <p class="text-[var(--ds-muted)] leading-relaxed">
-            Sistema de control de acceso integrado con base de datos centralizada y lector físico de credenciales.
-          </p>
-        </section>
-
-        <section>
-          <h3 class="text-lg font-bold text-[var(--ds-text)] mb-3">Resultado observable</h3>
-          <p class="text-[var(--ds-text)] leading-relaxed bg-[var(--ds-surface)] p-6 rounded-lg border border-[var(--ds-border)]">
-            El control de ingreso en recepción se realiza de forma automática validando membresías al instante. Se eliminaron las filas de espera en horarios pico y se recuperó la visibilidad exacta de pagos vencidos sin necesidad de conciliaciones manuales a fin de mes.
-            <br/><br/>
-            <span class="text-xs text-[var(--ds-accent)] font-mono uppercase">[MÉTRICAS PENDIENTES VALIDACIÓN]</span>
-          </p>
-        </section>
-      </article>
-
+    <div class="mb-12">
+      <span class="text-xs font-semibold tracking-[0.15em] text-[var(--ds-accent)] uppercase">CASOS DE ESTUDIO</span>
+      <h2 class="mt-2 text-3xl font-extrabold tracking-tight text-[var(--ds-text)] sm:text-4xl font-display">
+        Sistemas implementados con impacto medible
+      </h2>
     </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[30%_70%] gap-10 items-start">
+      
+      <!-- Left: Case Navigation -->
+      <nav aria-label="Navegación de casos" class="flex flex-row lg:flex-col gap-2 overflow-x-auto pb-4 lg:pb-0 lg:overflow-x-visible border-b lg:border-b-0 lg:border-r border-[var(--ds-border)] shrink-0 max-w-full">
+        {projects.map((p, index) => (
+          <button
+            data-case-target={p.id}
+            class={`text-left px-4 py-3 rounded-lg text-sm font-semibold tracking-wide whitespace-nowrap lg:whitespace-normal transition-all duration-300 ${
+              index === 0
+                ? "bg-[var(--ds-surface)] text-[var(--ds-accent)] border-l-2 border-[var(--ds-accent)]"
+                : "text-[var(--ds-muted)] hover:text-white hover:bg-[var(--ds-surface)]/50"
+            }`}
+          >
+            {p.title}
+          </button>
+        ))}
+      </nav>
+
+      <!-- Right: Narrative content -->
+      <div class="relative w-full">
+        {projects.map((p, index) => (
+          <article
+            id={`case-content-${p.id}`}
+            class={`grid grid-cols-1 md:grid-cols-[1.2fr_1.8fr] gap-8 md:gap-12 transition-all duration-500 ${
+              index === 0 ? "block opacity-100 animate-fade-in" : "hidden opacity-0"
+            }`}
+          >
+            <!-- Project metadata & Context -->
+            <div class="flex flex-col gap-6">
+              <div>
+                <span class="text-xs font-semibold tracking-wider text-[var(--ds-muted)] uppercase">Sector</span>
+                <p class="mt-1 text-base font-bold text-[var(--ds-text)]">{p.sector}</p>
+              </div>
+
+              <div class="h-px w-full bg-[var(--ds-border)]"></div>
+
+              <div>
+                <span class="text-xs font-semibold tracking-wider text-[var(--ds-muted)] uppercase">Situación Inicial</span>
+                <p class="mt-2 text-sm text-[var(--ds-muted)] leading-relaxed">{p.situation}</p>
+              </div>
+
+              {p.link !== "#" && (
+                <div class="mt-4">
+                  <a href={p.link} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--ds-accent)] hover:underline">
+                    Visitar sitio web <span>&rarr;</span>
+                  </a>
+                </div>
+              )}
+            </div>
+
+            <!-- Detailed journey & Result -->
+            <div class="flex flex-col gap-8">
+              <section>
+                <h3 class="text-sm font-bold tracking-wider text-[var(--ds-text)] uppercase mb-2">Cuello de botella</h3>
+                <p class="text-sm text-[var(--ds-muted)] leading-relaxed">{p.bottleneck}</p>
+              </section>
+
+              <!-- Image Slider / Gallery Component -->
+              <div class="relative overflow-hidden rounded-xl border border-[var(--ds-border)] bg-[#0C0F12] shadow-lg group case-gallery" data-project-id={p.id}>
+                <!-- Track -->
+                <div class="slides-container flex transition-transform duration-500 ease-out" style="transform: translateX(0%);">
+                  {p.slides.map((slide, slideIndex) => (
+                    <div class="w-full shrink-0 relative aspect-[16/10] flex items-center justify-center bg-[#07090C]">
+                      <img 
+                        src={slide.img} 
+                        alt={slide.label}
+                        class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-300"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                      />
+                      <!-- Fallback placeholder -->
+                      <div class="hidden absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-[#0B0D11]">
+                        <span class="text-xs text-[var(--ds-accent)] font-mono uppercase tracking-widest mb-1">[CAPTURA {slideIndex + 1}]</span>
+                        <span class="text-[11px] text-[var(--ds-muted)] font-mono mb-2">{slide.label}</span>
+                        <span class="text-[9px] text-white/40 font-mono">Colocar captura en: <code class="bg-[var(--ds-bg)] px-1 py-0.5 rounded text-[var(--ds-muted)]">public{slide.img}</code></span>
+                      </div>
+                      
+                      <!-- Overlay label -->
+                      <div class="absolute bottom-0 left-0 right-0 bg-black/70 backdrop-blur-xs p-3 text-[11px] font-mono text-[var(--ds-muted)] border-t border-white/5">
+                        {slideIndex + 1} / {p.slides.length} · {slide.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <!-- Navigation Arrows -->
+                <button class="nav-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 border border-white/10 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/90 cursor-pointer" aria-label="Anterior captura">
+                  &larr;
+                </button>
+                <button class="nav-next absolute right-3 top-1/2 -translate-y-1/2 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 border border-white/10 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/90 cursor-pointer" aria-label="Siguiente captura">
+                  &rarr;
+                </button>
+
+                <!-- Dots Pagination Indicator -->
+                <div class="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+                  {p.slides.map((_, slideIndex) => (
+                    <button
+                      class={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                        slideIndex === 0 ? "w-4 bg-[var(--ds-accent)]" : "w-1.5 bg-white/20 hover:bg-white/40"
+                      }`}
+                      data-slide-index={slideIndex}
+                      aria-label={`Ir a captura ${slideIndex + 1}`}
+                    ></button>
+                  ))}
+                </div>
+              </div>
+
+              <section>
+                <h3 class="text-sm font-bold tracking-wider text-[var(--ds-text)] uppercase mb-2">Solución a medida</h3>
+                <p class="text-sm text-[var(--ds-muted)] leading-relaxed">{p.solution}</p>
+              </section>
+
+              <section>
+                <h3 class="text-sm font-bold tracking-wider text-[var(--ds-accent)] uppercase mb-2">Resultado observable</h3>
+                <div class="bg-[var(--ds-surface)] p-5 rounded-lg border border-[var(--ds-border)]">
+                  <p class="text-sm text-[var(--ds-text)] leading-relaxed font-medium">
+                    {p.results}
+                  </p>
+                </div>
+              </section>
+            </div>
+          </article>
+        ))}
+      </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 p-4 backdrop-blur-md transition-opacity duration-300 opacity-0 cursor-zoom-out">
+      <div class="relative max-w-5xl max-h-[90vh] overflow-hidden rounded-lg border border-white/10 shadow-2xl">
+        <img id="lightbox-img" src="" alt="Full Capture" class="w-auto h-auto max-w-full max-h-[85vh] object-contain" />
+        <div id="lightbox-caption" class="absolute bottom-0 left-0 right-0 bg-black/70 p-4 text-center text-xs font-mono text-[var(--ds-muted)] border-t border-white/5"></div>
+      </div>
+      <button id="lightbox-close" class="absolute top-6 right-6 text-white text-3xl font-light hover:text-[var(--ds-accent)] cursor-pointer" aria-label="Cerrar">&times;</button>
+    </div>
+
+  </div>
   </div>
 </section>
 <div class="w-full h-px bg-[var(--ds-border)]"></div>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+</style>
+
+<script>
+  // Project Tabs Controller
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-case-target]');
+  const articles = document.querySelectorAll<HTMLElement>('[id^="case-content-"]');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-case-target');
+
+      // Update buttons style
+      buttons.forEach(b => {
+        if (b === btn) {
+          b.classList.add('bg-[var(--ds-surface)]', 'text-[var(--ds-accent)]', 'border-l-2', 'border-l-[var(--ds-accent)]');
+          b.classList.remove('text-[var(--ds-muted)]');
+        } else {
+          b.classList.remove('bg-[var(--ds-surface)]', 'text-[var(--ds-accent)]', 'border-l-2', 'border-l-[var(--ds-accent)]');
+          b.classList.add('text-[var(--ds-muted)]');
+        }
+      });
+
+      // Show/Hide active article with fade animation
+      articles.forEach(art => {
+        if (art.id === `case-content-${targetId}`) {
+          art.classList.remove('hidden');
+          art.classList.add('animate-fade-in');
+          // Reset slider for this project to slide 0 when switched to
+          const gallery = art.querySelector<HTMLElement>('.case-gallery');
+          if (gallery) {
+            updateSlider(gallery, 0);
+          }
+        } else {
+          art.classList.add('hidden');
+          art.classList.remove('animate-fade-in');
+        }
+      });
+    });
+  });
+
+  // Slider / Gallery Paginator Controller
+  const galleries = document.querySelectorAll<HTMLElement>('.case-gallery');
+
+  const updateSlider = (gallery: HTMLElement, index: number) => {
+    const container = gallery.querySelector<HTMLElement>('.slides-container');
+    const dots = gallery.querySelectorAll<HTMLElement>('[data-slide-index]');
+    if (!container) return;
+
+    // Apply slider shift translation
+    container.style.transform = `translateX(-${index * 100}%)`;
+
+    // Save active state index inside dataset
+    gallery.dataset.activeSlide = index.toString();
+
+    // Update paginating dots
+    dots.forEach((dot, dotIdx) => {
+      if (dotIdx === index) {
+        dot.classList.add('w-4', 'bg-[var(--ds-accent)]');
+        dot.classList.remove('w-1.5', 'bg-white/20');
+      } else {
+        dot.classList.remove('w-4', 'bg-[var(--ds-accent)]');
+        dot.classList.add('w-1.5', 'bg-white/20');
+      }
+    });
+  };
+
+  galleries.forEach(gallery => {
+    let activeIdx = 0;
+    gallery.dataset.activeSlide = activeIdx.toString();
+    const slides = gallery.querySelectorAll('.slides-container > div');
+    const totalSlides = slides.length;
+
+    const prevBtn = gallery.querySelector('.nav-prev');
+    const nextBtn = gallery.querySelector('.nav-next');
+    const dots = gallery.querySelectorAll('[data-slide-index]');
+
+    prevBtn?.addEventListener('click', () => {
+      activeIdx = parseInt(gallery.dataset.activeSlide || '0');
+      activeIdx = (activeIdx - 1 + totalSlides) % totalSlides;
+      updateSlider(gallery, activeIdx);
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      activeIdx = parseInt(gallery.dataset.activeSlide || '0');
+      activeIdx = (activeIdx + 1) % totalSlides;
+      updateSlider(gallery, activeIdx);
+    });
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const slideIndex = parseInt(dot.getAttribute('data-slide-index') || '0');
+        updateSlider(gallery, slideIndex);
+      });
+    });
+  });
+
+  // Lightbox Modal Controller
+  const lightbox = document.getElementById('lightbox-modal');
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxClose = document.getElementById('lightbox-close');
+  const slideImages = document.querySelectorAll<HTMLImageElement>('.slides-container img');
+
+  slideImages.forEach(img => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', () => {
+      if (!lightbox || !lightboxImg) return;
+      
+      // Load source image
+      lightboxImg.src = img.src;
+      if (lightboxCaption) {
+        lightboxCaption.textContent = img.alt || '';
+      }
+      
+      // Display modal with transition
+      lightbox.classList.remove('hidden');
+      lightbox.classList.add('flex');
+      window.requestAnimationFrame(() => {
+        lightbox.classList.add('opacity-100');
+        lightbox.classList.remove('opacity-0');
+      });
+    });
+  });
+
+  const closeLightbox = () => {
+    if (!lightbox) return;
+    lightbox.classList.add('opacity-0');
+    lightbox.classList.remove('opacity-100');
+    setTimeout(() => {
+      lightbox.classList.add('hidden');
+      lightbox.classList.remove('flex');
+    }, 300);
+  };
+
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target === lightboxClose) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox && !lightbox.classList.contains('hidden')) {
+      closeLightbox();
+    }
+  });
+</script>

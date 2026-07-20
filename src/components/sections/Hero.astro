@@ -2,96 +2,39 @@
 // src/components/sections/Hero.astro
 ---
 
-<section id="hero" class="relative w-full pt-32 pb-20 md:pt-40 border-t border-[var(--ds-border)] mt-20">
+<section id="hero" class="relative w-full pt-32 pb-24 md:pt-40 md:pb-32 border-t border-[var(--ds-border)] mt-20">
   <div class="mx-auto w-full max-w-7xl px-6 md:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-[55%_45%] gap-12 items-center">
-      
-      <!-- Left Column: Copy -->
-      <div class="flex flex-col items-start text-left">
-        <p class="text-xs font-semibold tracking-[0.15em] text-[var(--ds-muted)] uppercase mb-6">
-          Software a medida · Bolivia
-        </p>
+    <div class="flex flex-col items-start text-left max-w-4xl">
+      <p class="text-xs font-semibold tracking-[0.15em] text-[var(--ds-accent)] uppercase mb-6 ds-reveal">
+        DESARROLLO DE SOFTWARE A MEDIDA
+      </p>
 
-        <h1 class="text-4xl font-extrabold tracking-tight text-[var(--ds-text)] sm:text-5xl md:text-6xl leading-[1.15] ds-reveal">
-          Convertimos operaciones manuales en sistemas que tu empresa puede controlar y escalar.
-        </h1>
+      <h1 class="text-4xl font-extrabold tracking-tight text-[var(--ds-text)] sm:text-5xl md:text-6xl lg:text-[4.2rem] leading-[1.1] ds-reveal">
+        Deja de perder tiempo y dinero en operaciones manuales.
+      </h1>
 
-        <p class="mt-6 text-lg leading-relaxed text-[var(--ds-muted)] max-w-2xl ds-reveal">
-          Diseñamos software de gestión, ventas digitales y automatización para reducir errores, recuperar horas de trabajo y dar visibilidad a todo el negocio.
-        </p>
+      <p class="mt-8 text-lg md:text-xl leading-relaxed text-[var(--ds-muted)] max-w-2xl ds-reveal">
+        Elimina los cuellos de botella y errores humanos que frenan tu crecimiento. Desarrollamos sistemas de gestión que automatizan tus procesos, reducen costos operativos y escalan tus ganancias.
+      </p>
 
-        <div class="mt-10 flex flex-col items-start gap-6 w-full sm:flex-row sm:items-center ds-reveal">
-          <a href="#diagnostico" class="inline-flex items-center justify-center rounded-lg border border-[var(--ds-accent)] bg-transparent px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-[var(--ds-accent)] hover:text-black w-full sm:w-auto">
-            Solicitar diagnóstico operativo
-          </a>
-          <a href="#casos" class="text-base font-medium text-white hover:text-[var(--ds-accent)] transition-colors inline-flex items-center gap-1 w-full sm:w-auto justify-center sm:justify-start">
-            Ver casos reales <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
-
-        <p class="mt-8 text-sm text-[var(--ds-muted)] ds-reveal">
-          Sin contratos de permanencia · Diagnóstico inicial sin costo
-        </p>
-
-        <!-- Mobile flow list (hidden on md) -->
-        <div class="mt-16 flex flex-col gap-4 border-l border-[var(--ds-accent)] pl-4 md:hidden ds-reveal">
-          <div class="flex items-baseline gap-2">
-            <span class="text-xs font-mono text-[var(--ds-muted)]">1.</span>
-            <span class="text-sm font-medium text-[var(--ds-text)]">Pedido</span>
-          </div>
-          <div class="flex items-baseline gap-2">
-            <span class="text-xs font-mono text-[var(--ds-muted)]">2.</span>
-            <span class="text-sm font-medium text-[var(--ds-text)]">Pago</span>
-          </div>
-          <div class="flex items-baseline gap-2">
-            <span class="text-xs font-mono text-[var(--ds-muted)]">3.</span>
-            <span class="text-sm font-medium text-[var(--ds-text)]">Inventario</span>
-          </div>
-          <div class="flex items-baseline gap-2">
-            <span class="text-xs font-mono text-[var(--ds-muted)]">4.</span>
-            <span class="text-sm font-medium text-[var(--ds-text)]">Reporte</span>
-          </div>
-        </div>
+      <div class="mt-8 flex flex-wrap items-center gap-4 text-sm font-medium text-[var(--ds-text)] ds-reveal">
+        <span class="flex items-center gap-2"><span class="text-[var(--ds-accent)]">✓</span> Reduce costos operativos</span>
+        <span class="flex items-center gap-2"><span class="text-[var(--ds-accent)]">✓</span> Ahorra cientos de horas</span>
+        <span class="flex items-center gap-2"><span class="text-[var(--ds-accent)]">✓</span> Control en tiempo real</span>
       </div>
 
-      <!-- Right Column: Diagram (desktop only) -->
-      <div class="hidden md:flex justify-center items-center ds-reveal">
-        <svg viewBox="0 0 300 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full max-w-[280px]">
-          <!-- Node 1: Pedido -->
-          <rect x="50" y="20" width="200" height="48" rx="6" stroke="var(--ds-border)" stroke-width="2" fill="var(--ds-surface)"/>
-          <text x="150" y="48" text-anchor="middle" fill="var(--ds-text)" font-size="14" font-weight="500">Pedido</text>
-          <text x="150" y="85" text-anchor="middle" fill="var(--ds-muted)" font-size="10">registrado</text>
-          
-          <!-- Arrow 1 -> 2 -->
-          <path d="M150 68 L150 110" stroke="var(--ds-accent)" stroke-width="2" stroke-dasharray="4 4" />
-          <polygon points="146,104 154,104 150,110" fill="var(--ds-accent)"/>
-
-          <!-- Node 2: Pago -->
-          <rect x="50" y="115" width="200" height="48" rx="6" stroke="var(--ds-border)" stroke-width="2" fill="var(--ds-surface)"/>
-          <text x="150" y="143" text-anchor="middle" fill="var(--ds-text)" font-size="14" font-weight="500">Pago</text>
-          <text x="150" y="180" text-anchor="middle" fill="var(--ds-muted)" font-size="10">procesado</text>
-
-          <!-- Arrow 2 -> 3 -->
-          <path d="M150 163 L150 205" stroke="var(--ds-accent)" stroke-width="2" stroke-dasharray="4 4"/>
-          <polygon points="146,199 154,199 150,205" fill="var(--ds-accent)"/>
-
-          <!-- Node 3: Inventario -->
-          <rect x="50" y="210" width="200" height="48" rx="6" stroke="var(--ds-border)" stroke-width="2" fill="var(--ds-surface)"/>
-          <text x="150" y="238" text-anchor="middle" fill="var(--ds-text)" font-size="14" font-weight="500">Inventario</text>
-          <text x="150" y="275" text-anchor="middle" fill="var(--ds-muted)" font-size="10">actualizado</text>
-
-          <!-- Arrow 3 -> 4 -->
-          <path d="M150 258 L150 300" stroke="var(--ds-accent)" stroke-width="2" stroke-dasharray="4 4"/>
-          <polygon points="146,294 154,294 150,300" fill="var(--ds-accent)"/>
-
-          <!-- Node 4: Reporte -->
-          <rect x="50" y="305" width="200" height="48" rx="6" stroke="var(--ds-border)" stroke-width="2" fill="var(--ds-surface)"/>
-          <text x="150" y="333" text-anchor="middle" fill="var(--ds-text)" font-size="14" font-weight="500">Reporte</text>
-          <text x="150" y="370" text-anchor="middle" fill="var(--ds-muted)" font-size="10">generado</text>
-        </svg>
+      <div class="mt-12 flex flex-col items-start gap-6 w-full sm:flex-row sm:items-center ds-reveal">
+        <a href="#diagnostico" class="inline-flex items-center justify-center rounded-lg border border-[var(--ds-accent)] bg-[var(--ds-text)] px-8 py-4 text-base font-bold text-black transition-colors hover:bg-[var(--ds-accent)] hover:text-black w-full sm:w-auto">
+          Solicitar diagnóstico operativo
+        </a>
+        <a href="#casos" class="text-base font-medium text-[var(--ds-text)] hover:text-[var(--ds-accent)] transition-colors inline-flex items-center gap-1 w-full sm:w-auto justify-center sm:justify-start">
+          Ver casos reales <span aria-hidden="true">&rarr;</span>
+        </a>
       </div>
 
+      <p class="mt-10 text-sm text-[var(--ds-muted)] ds-reveal">
+        Sin contratos de permanencia · Diagnóstico inicial sin costo
+      </p>
     </div>
   </div>
 </section>
-

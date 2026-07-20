@@ -8,6 +8,7 @@ interface Props {
 }
 
 const { title, description, lang = 'es' } = Astro.props;
+import AmbientBackground from '../components/ui/AmbientBackground.astro';
 ---
 
 <!doctype html>
@@ -17,17 +18,21 @@ const { title, description, lang = 'es' } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/png" href="/assets/favicon.PNG" />
     <title>{title}</title>
     <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   </head>
   <body>
+    <AmbientBackground />
+    <div class="relative z-10">
     <a
       href="#main-content"
       class="fixed left-4 top-4 z-[100] -translate-y-24 rounded-lg bg-[var(--ds-accent)] px-4 py-3 font-semibold text-black shadow-lg transition-transform focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-white"
     >
       Saltar al contenido principal
     </a>
-    <slot />
+      <slot />
+    </div>
     <script>
       const observer = new IntersectionObserver(
         (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); observer.unobserve(e.target); }}),

@@ -2,27 +2,35 @@
 // src/components/sections/EvidenceStrip.astro
 ---
 
-<section class="w-full border-y border-[var(--ds-border)] bg-[var(--ds-surface)] py-4 ds-reveal">
-  <div class="mx-auto flex max-w-7xl flex-col items-start justify-between gap-4 px-6 md:flex-row md:items-center md:px-8">
+<section class="w-full border-y border-[var(--ds-border)] bg-[var(--ds-bg)] py-12 md:py-16 ds-reveal relative z-10">
+  <div class="mx-auto flex max-w-7xl flex-col gap-10 px-6 md:flex-row md:items-start md:justify-between md:px-8">
     
-    <div class="flex flex-wrap gap-x-8 gap-y-4">
-      <div class="flex flex-col">
-        <span class="text-xs text-[var(--ds-muted)] uppercase tracking-wider">Proyectos entregados</span>
-        <span class="text-sm font-medium text-[var(--ds-text)]">[N] &rarr;</span>
+    <!-- Title / Context -->
+    <div class="flex flex-col md:w-1/3">
+      <h2 class="text-xl font-bold text-[var(--ds-text)]">Operación escalable</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--ds-muted)]">
+        No instalamos plantillas. Desarrollamos sistemas de gestión que asumen la carga manual de tu empresa y se adaptan a tu volumen de ventas.
+      </p>
+    </div>
+
+    <!-- Metrics Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 md:w-2/3">
+      <!-- Metric 1 -->
+      <div class="flex flex-col border-l-2 border-[var(--ds-accent)] pl-5 relative">
+        <span class="text-4xl md:text-5xl font-display font-extrabold text-[var(--ds-text)]">+35</span>
+        <span class="mt-2 text-[10px] font-semibold uppercase tracking-widest text-[var(--ds-muted)]">Proyectos entregados</span>
       </div>
-      <div class="flex flex-col">
-        <span class="text-xs text-[var(--ds-muted)] uppercase tracking-wider">Clientes activos</span>
-        <span class="text-sm font-medium text-[var(--ds-text)]">[N] &rarr;</span>
+      <!-- Metric 2 -->
+      <div class="flex flex-col border-l-2 border-[var(--ds-border)] pl-5 relative">
+        <span class="text-4xl md:text-5xl font-display font-extrabold text-[var(--ds-text)]">20<span class="text-2xl text-[var(--ds-muted)] font-normal ml-1">+</span></span>
+        <span class="mt-2 text-[10px] font-semibold uppercase tracking-widest text-[var(--ds-muted)]">Clientes activos</span>
       </div>
-      <div class="flex flex-col">
-        <span class="text-xs text-[var(--ds-muted)] uppercase tracking-wider">Tiempo promedio de entrega</span>
-        <span class="text-sm font-medium text-[var(--ds-text)]">[N] semanas &rarr;</span>
+      <!-- Metric 3 -->
+      <div class="flex flex-col border-l-2 border-[var(--ds-border)] pl-5 relative">
+        <span class="text-4xl md:text-5xl font-display font-extrabold text-[var(--ds-text)]">3-6<span class="text-2xl text-[var(--ds-muted)] font-normal ml-1">sem</span></span>
+        <span class="mt-2 text-[10px] font-semibold uppercase tracking-widest text-[var(--ds-muted)]">Tiempo prom. de entrega</span>
       </div>
     </div>
 
-    <div class="text-[10px] text-[var(--ds-muted)] uppercase tracking-wider">
-      * Cifras en validación
-    </div>
-    
   </div>
 </section>
