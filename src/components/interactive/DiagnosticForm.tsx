@@ -50,7 +50,10 @@ export default function DiagnosticForm() {
   const [submitError, setSubmitError] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
   const [turnstileLoadError, setTurnstileLoadError] = useState('');
+  const [turnstileStatus, setTurnstileStatus] = useState('');
   const requestId = useRef<string | null>(null);
+  const stepHeadingRef = useRef<HTMLHeadingElement | null>(null);
+  const hasMounted = useRef(false);
   const turnstileContainer = useRef<HTMLDivElement | null>(null);
   const turnstileWidgetId = useRef<string | null>(null);
   const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
@@ -62,6 +65,7 @@ export default function DiagnosticForm() {
     let retryTimer: number | undefined;
     const deadline = Date.now() + 5_000;
     setTurnstileLoadError('');
+    setTurnstileStatus('Cargando verificación de seguridad.');
 
     const renderTurnstile = () => {
       if (cancelled || turnstileWidgetId.current) return;
@@ -69,6 +73,7 @@ export default function DiagnosticForm() {
       const turnstile = (window as TurnstileWindow).turnstile;
       if (!turnstile || !turnstileContainer.current) {
         if (Date.now() >= deadline) {
+          setTurnstileStatus('');
           setTurnstileLoadError('No pudimos cargar la verificación. Intentá nuevamente o escribinos a darkosync@gmail.com.');
           return;
         }
@@ -80,10 +85,19 @@ export default function DiagnosticForm() {
         sitekey: turnstileSiteKey,
         theme: 'dark',
         action: 'lead_submit',
-        callback: token => { setTurnstileToken(token); setTurnstileLoadError(''); },
-        'expired-callback': () => setTurnstileToken(''),
+        callback: token => {
+          setTurnstileToken(token);
+          setTurnstileLoadError('');
+          setTurnstileStatus('Verificación de seguridad completada.');
+        },
+        'expired-callback': () => {
+          setTurnstileToken('');
+          setTurnstileStatus('');
+          setTurnstileLoadError('La verificación expiró. Completala nuevamente.');
+        },
         'error-callback': () => {
           setTurnstileToken('');
+          setTurnstileStatus('');
           setTurnstileLoadError('La verificación falló. Intentá nuevamente o escribinos a darkosync@gmail.com.');
         },
       });
@@ -100,6 +114,16 @@ export default function DiagnosticForm() {
       setTurnstileToken('');
     };
   }, [step, turnstileSiteKey]);
+
+  useEffect(() => {
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      return;
+    }
+    window.requestAnimationFrame(() => stepHeadingRef.current?.focus());
+  }, [step]);
+
+  const goToStep = (nextStep: Step) => setStep(nextStep);
 
   const markEdited = () => {
     if (requestId.current) requestId.current = null;
@@ -125,14 +149,14 @@ export default function DiagnosticForm() {
     markEdited();
     setData(prev => ({ ...prev, need: needId }));
     setErrors(prev => ({ ...prev, need: undefined }));
-    setStep(2);
+    goToStep(2);
   };
 
   const handleSelectStage = (stageId: string) => {
     markEdited();
     setData(prev => ({ ...prev, stage: stageId }));
     setErrors(prev => ({ ...prev, stage: undefined }));
-    setStep(4);
+    goToStep(4);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -146,6 +170,7 @@ export default function DiagnosticForm() {
   const validateStep3 = () => {
     if (data.bottleneck.trim().length < 10 || data.bottleneck.trim().length > 4000) {
       setErrors(prev => ({ ...prev, bottleneck: 'Describe el cuello de botella en 10 a 4000 caracteres.' }));
+      window.requestAnimationFrame(() => document.getElementById('lead-bottleneck')?.focus());
       return false;
     }
     return true;
@@ -160,7 +185,12 @@ export default function DiagnosticForm() {
     if (!data.consent) newErrors.consent = 'Debes aceptar el tratamiento de tus datos.';
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    const firstInvalid = (['name', 'company', 'email', 'phone', 'consent'] as const)
+      .find(field => Boolean(newErrors[field]));
+    if (firstInvalid) {
+      window.requestAnimationFrame(() => document.getElementById(`lead-${firstInvalid}`)?.focus());
+    }
+    return !firstInvalid;
   };
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -197,11 +227,19 @@ export default function DiagnosticForm() {
 
       {/* Progress Bar */}
       <div className="mb-8">
-        <div className="flex justify-between items-center text-xs font-mono text-white/40 mb-2">
+        <p className="sr-only" aria-live="polite" aria-atomic="true">Paso {step} de 4.</p>
+        <div className="flex justify-between items-center text-xs font-mono text-white/60 mb-2">
           <span>Paso {step} de 4</span>
           <span className="text-[var(--color-accent)]">{Math.round((step / 4) * 100)}% Completado</span>
         </div>
-        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+        <div
+          role="progressbar"
+          aria-label="Progreso del diagnóstico"
+          aria-valuemin={1}
+          aria-valuemax={4}
+          aria-valuenow={step}
+          className="h-1 w-full bg-white/5 rounded-full overflow-hidden"
+        >
           <div 
             className="h-full bg-[var(--color-accent)] rounded-full transition-all duration-500 ease-out" 
             style={{ width: `${(step / 4) * 100}%` }}
@@ -216,7 +254,7 @@ export default function DiagnosticForm() {
         {/* STEP 1: Need selection */}
         {step === 1 && (
           <div className="animate-[fadeIn_0.3s_ease-out]">
-            <h3 className="text-xl font-bold text-white mb-2">¿Qué necesitas resolver en tu negocio?</h3>
+            <h3 ref={stepHeadingRef} tabIndex={-1} className="text-xl font-bold text-white mb-2 outline-none">¿Qué necesitas resolver en tu negocio?</h3>
             <p className="text-sm text-[var(--color-text-muted)] mb-6">Selecciona la opción que mejor se adapte a tu requerimiento actual.</p>
             <div className="space-y-3">
               {needsList.map(need => (
@@ -239,10 +277,11 @@ export default function DiagnosticForm() {
         {/* STEP 2: Bottleneck description */}
         {step === 2 && (
           <div className="animate-[fadeIn_0.3s_ease-out] flex-grow">
-            <h3 className="text-xl font-bold text-white mb-2">¿Dónde está el cuello de botella actual?</h3>
+            <h3 ref={stepHeadingRef} tabIndex={-1} className="text-xl font-bold text-white mb-2 outline-none">¿Dónde está el cuello de botella actual?</h3>
             <p className="text-sm text-[var(--color-text-muted)] mb-6">Contanos brevemente qué procesos son lentos o dónde se pierden ventas/datos.</p>
             <div className="flex flex-col gap-2">
               <textarea
+                id="lead-bottleneck"
                 name="bottleneck"
                 value={data.bottleneck}
                 onChange={handleInputChange}
@@ -251,21 +290,23 @@ export default function DiagnosticForm() {
                 minLength={10}
                 maxLength={4000}
                 required
-                className="w-full rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white placeholder-white/20 focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] transition-all resize-none"
+                aria-invalid={Boolean(errors.bottleneck)}
+                aria-describedby={errors.bottleneck ? 'lead-bottleneck-error' : undefined}
+                className="w-full rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white placeholder-white/50 focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] transition-all resize-none"
               ></textarea>
-              {errors.bottleneck && <span className="text-xs text-red-400 font-semibold">{errors.bottleneck}</span>}
+              {errors.bottleneck && <span id="lead-bottleneck-error" className="text-xs text-red-400 font-semibold">{errors.bottleneck}</span>}
             </div>
             <div className="flex gap-3 mt-8">
               <button
                 type="button"
-                onClick={() => setStep(1)}
+                onClick={() => goToStep(1)}
                 className="rounded-lg border border-white/10 px-5 py-2.5 text-xs font-mono font-bold text-white hover:bg-white/5 transition-all"
               >
                 Atrás
               </button>
               <button
                 type="button"
-                onClick={() => { if (validateStep3()) setStep(3); }}
+                onClick={() => { if (validateStep3()) goToStep(3); }}
                 className="rounded-lg bg-white px-5 py-2.5 text-xs font-mono font-bold text-black hover:bg-[var(--color-accent)] transition-all"
               >
                 Siguiente
@@ -277,7 +318,7 @@ export default function DiagnosticForm() {
         {/* STEP 3: Project stage */}
         {step === 3 && (
           <div className="animate-[fadeIn_0.3s_ease-out]">
-            <h3 className="text-xl font-bold text-white mb-2">¿En qué etapa está el proyecto?</h3>
+            <h3 ref={stepHeadingRef} tabIndex={-1} className="text-xl font-bold text-white mb-2 outline-none">¿En qué etapa está el proyecto?</h3>
             <p className="text-sm text-[var(--color-text-muted)] mb-6">Selecciona el estado actual de la iniciativa técnica.</p>
             <div className="space-y-3">
               {stagesList.map(stage => (
@@ -296,7 +337,7 @@ export default function DiagnosticForm() {
             </div>
             <button
               type="button"
-              onClick={() => setStep(2)}
+              onClick={() => goToStep(2)}
               className="mt-6 rounded-lg border border-white/10 px-5 py-2.5 text-xs font-mono font-bold text-white hover:bg-white/5 transition-all"
             >
               Atrás
@@ -307,7 +348,7 @@ export default function DiagnosticForm() {
         {/* STEP 4: Contact details */}
         {step === 4 && (
           <div className="animate-[fadeIn_0.3s_ease-out] flex-grow">
-            <h3 className="text-xl font-bold text-white mb-2">Datos de contacto</h3>
+            <h3 ref={stepHeadingRef} tabIndex={-1} className="text-xl font-bold text-white mb-2 outline-none">Datos de contacto</h3>
             <p className="text-sm text-[var(--color-text-muted)] mb-6">Para coordinar el diagnóstico técnico o coordinar la visita a tu negocio.</p>
             
             <div className="space-y-4">
@@ -324,9 +365,11 @@ export default function DiagnosticForm() {
                     minLength={2}
                     maxLength={120}
                     required
-                    className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/20 focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] transition-all"
+                    aria-invalid={Boolean(errors.name)}
+                    aria-describedby={errors.name ? 'lead-name-error' : undefined}
+                    className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/50 focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] transition-all"
                   />
-                  {errors.name && <span className="text-[10px] text-red-400 font-semibold">{errors.name}</span>}
+                  {errors.name && <span id="lead-name-error" className="text-xs text-red-400 font-semibold">{errors.name}</span>}
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="lead-company" className="text-xs font-semibold text-white/60">Empresa</label>
@@ -340,9 +383,11 @@ export default function DiagnosticForm() {
                     minLength={2}
                     maxLength={160}
                     required
-                    className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/20 focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] transition-all"
+                    aria-invalid={Boolean(errors.company)}
+                    aria-describedby={errors.company ? 'lead-company-error' : undefined}
+                    className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/50 focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] transition-all"
                   />
-                  {errors.company && <span className="text-[10px] text-red-400 font-semibold">{errors.company}</span>}
+                  {errors.company && <span id="lead-company-error" className="text-xs text-red-400 font-semibold">{errors.company}</span>}
                 </div>
               </div>
 
@@ -359,9 +404,11 @@ export default function DiagnosticForm() {
                     minLength={5}
                     maxLength={254}
                     required
-                    className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/20 focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] transition-all"
+                    aria-invalid={Boolean(errors.email)}
+                    aria-describedby={errors.email ? 'lead-email-error' : undefined}
+                    className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/50 focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] transition-all"
                   />
-                  {errors.email && <span className="text-[10px] text-red-400 font-semibold">{errors.email}</span>}
+                  {errors.email && <span id="lead-email-error" className="text-xs text-red-400 font-semibold">{errors.email}</span>}
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="lead-phone" className="text-xs font-semibold text-white/60">Número de WhatsApp</label>
@@ -375,17 +422,30 @@ export default function DiagnosticForm() {
                     minLength={7}
                     maxLength={32}
                     required
-                    className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/20 focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] transition-all"
+                    aria-invalid={Boolean(errors.phone)}
+                    aria-describedby={errors.phone ? 'lead-phone-error' : undefined}
+                    className="rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/50 focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] transition-all"
                   />
-                  {errors.phone && <span className="text-[10px] text-red-400 font-semibold">{errors.phone}</span>}
+                  {errors.phone && <span id="lead-phone-error" className="text-xs text-red-400 font-semibold">{errors.phone}</span>}
                 </div>
               </div>
               <label className="mt-4 flex items-start gap-3 text-xs text-white/60">
-                <input type="checkbox" name="consent" checked={data.consent} onChange={handleInputChange} required className="mt-0.5 accent-[var(--color-accent)]" />
+                <input
+                  type="checkbox"
+                  id="lead-consent"
+                  name="consent"
+                  checked={data.consent}
+                  onChange={handleInputChange}
+                  required
+                  aria-invalid={Boolean(errors.consent)}
+                  aria-describedby={errors.consent ? 'lead-consent-error' : undefined}
+                  className="mt-0.5 accent-[var(--color-accent)]"
+                />
                 <span>Acepto que DarkoSync procese estos datos y comparta el diagn&oacute;stico y contacto enviados con WhatsApp/Meta para abrir la conversaci&oacute;n.</span>
               </label>
-              {errors.consent && <span className="text-[10px] text-red-400 font-semibold">{errors.consent}</span>}
-              {turnstileSiteKey ? <div ref={turnstileContainer} aria-label="Verificación de seguridad"></div> : <p role="alert" className="text-xs text-red-400">Verificaci&oacute;n no disponible.</p>}
+              {errors.consent && <span id="lead-consent-error" className="text-xs text-red-400 font-semibold">{errors.consent}</span>}
+              {turnstileSiteKey ? <div ref={turnstileContainer} role="group" aria-label="Verificación de seguridad"></div> : <p role="alert" className="text-xs text-red-400">Verificaci&oacute;n no disponible.</p>}
+              {turnstileStatus && <p role="status" aria-live="polite" className="text-xs text-white/60">{turnstileStatus}</p>}
               {turnstileLoadError && <p role="alert" className="text-xs text-red-400">{turnstileLoadError}</p>}
               {submitError && <p role="alert" className="mt-4 text-xs text-red-400 font-semibold">{submitError}</p>}
             </div>
@@ -393,7 +453,7 @@ export default function DiagnosticForm() {
             <div className="flex gap-3 mt-8">
               <button
                 type="button"
-                onClick={() => setStep(3)}
+                onClick={() => goToStep(3)}
                 className="rounded-lg border border-white/10 px-5 py-2.5 text-xs font-mono font-bold text-white hover:bg-white/5 transition-all"
               >
                 Atrás
@@ -404,7 +464,7 @@ export default function DiagnosticForm() {
                 className="flex-grow disabled:cursor-wait disabled:opacity-60 rounded-lg bg-[var(--color-accent)] px-5 py-2.5 text-xs font-mono font-bold text-black hover:bg-white transition-all flex items-center justify-center gap-2"
               >
                 <span>{pending ? 'Guardando solicitud...' : 'Solicitar Diagnóstico en WhatsApp'}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
+                <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
                   <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.22 5.03a.75.75 0 111.06-1.06l5.5 5.5a.75.75 0 010 1.06l-5.5 5.5a.75.75 0 11-1.06-1.06l4.168-4.17H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
                 </svg>
               </button>

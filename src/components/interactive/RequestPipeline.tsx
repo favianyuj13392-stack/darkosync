@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 type Scenario = 'backend' | 'ai' | 'commerce';
+type NodeId = 'client' | 'gateway' | 'auth' | 'logic' | 'db' | 'cache';
 
 interface NodeDetail {
   title: string;
@@ -11,20 +12,29 @@ interface NodeDetail {
 
 export default function RequestPipeline() {
   const [activeScenario, setActiveScenario] = useState<Scenario>('backend');
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [hoveredNode, setHoveredNode] = useState<NodeId | null>(null);
   const [requestCount, setRequestCount] = useState(0);
+  const [reduceMotion, setReduceMotion] = useState(false);
 
-  // Auto-increment simulated requests
   useEffect(() => {
-    const interval = setInterval(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncPreference = () => setReduceMotion(mediaQuery.matches);
+    syncPreference();
+    mediaQuery.addEventListener('change', syncPreference);
+    return () => mediaQuery.removeEventListener('change', syncPreference);
+  }, []);
+
+  // Auto-increment simulated requests unless motion reduction is requested.
+  useEffect(() => {
+    if (reduceMotion) return;
+    const interval = window.setInterval(() => {
       setRequestCount(c => c + 1);
     }, activeScenario === 'commerce' ? 400 : 1500);
+    return () => window.clearInterval(interval);
+  }, [activeScenario, reduceMotion]);
 
-    return () => clearInterval(interval);
-  }, [activeScenario]);
-
-  const getNodeDetail = (nodeId: string): NodeDetail => {
-    const details: Record<string, NodeDetail> = {
+  const getNodeDetail = (nodeId: NodeId): NodeDetail => {
+    const details: Record<NodeId, NodeDetail> = {
       client: {
         title: "Cliente (App/Web)",
         description: "Dispositivo del usuario enviando solicitudes concurrentes mediante HTTPS.",
@@ -58,7 +68,22 @@ export default function RequestPipeline() {
         metric: "Hit Rate: 92%"
       }
     };
-    return details[nodeId] || { title: "Nodo Técnico", description: "Procesamiento de datos del sistema." };
+    return details[nodeId];
+  };
+
+  const showNode = (nodeId: NodeId) => setHoveredNode(nodeId);
+  const handleNodeKeyDown = (event: React.KeyboardEvent<SVGGElement>, nodeId: NodeId) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      showNode(nodeId);
+    }
+  };
+  const hideNodeAfterPointer = (event: React.MouseEvent<SVGGElement>) => {
+    if (document.activeElement !== event.currentTarget) setHoveredNode(null);
+  };
+  const nodeLabel = (nodeId: NodeId) => {
+    const detail = getNodeDetail(nodeId);
+    return `${detail.title}. ${detail.description}${detail.metric ? ` ${detail.metric}.` : ''}`;
   };
 
   return (
@@ -76,6 +101,8 @@ export default function RequestPipeline() {
           {(['backend', 'ai', 'commerce'] as Scenario[]).map((scenario) => (
             <button
               key={scenario}
+              type="button"
+              aria-pressed={activeScenario === scenario}
               onClick={() => setActiveScenario(scenario)}
               className={`rounded-lg px-4 py-2 text-xs font-mono font-bold uppercase transition-all duration-300 border ${
                 activeScenario === scenario
@@ -84,6 +111,7 @@ export default function RequestPipeline() {
               }`}
             >
               {scenario}
+              {activeScenario === scenario && <span className="sr-only"> (activo)</span>}
             </button>
           ))}
         </div>
@@ -92,7 +120,7 @@ export default function RequestPipeline() {
       {/* SVG Pipeline Visualization */}
       <div className="relative w-full overflow-x-auto no-scrollbar py-6 z-10 flex justify-center">
         <div className="min-w-[700px] w-full max-w-4xl relative">
-          <svg viewBox="0 0 800 200" className="w-full h-auto overflow-visible select-none fill-none">
+          <svg role="group" aria-label="Flujo interactivo de solicitudes. Usá Tab para explorar cada nodo." viewBox="0 0 800 200" className="w-full h-auto overflow-visible select-none fill-none">
             {/* Defs for gradients, patterns and arrow markers */}
             <defs>
               <linearGradient id="glow-line" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -164,9 +192,16 @@ export default function RequestPipeline() {
             {/* Nodes */}
             {/* Client Node */}
             <g
-              className="cursor-pointer"
-              onMouseEnter={() => setHoveredNode('client')}
-              onMouseLeave={() => setHoveredNode(null)}
+              role="button"
+              tabIndex={0}
+              aria-label={nodeLabel('client')}
+              className="cursor-pointer outline-none focus-visible:[&_circle]:stroke-[var(--color-accent)] focus-visible:[&_circle]:[stroke-width:3px]"
+              onClick={() => showNode('client')}
+              onFocus={() => showNode('client')}
+              onBlur={() => setHoveredNode(null)}
+              onKeyDown={event => handleNodeKeyDown(event, 'client')}
+              onMouseEnter={() => showNode('client')}
+              onMouseLeave={hideNodeAfterPointer}
             >
               <circle cx="80" cy="100" r="16" fill="#11171d" stroke={hoveredNode === 'client' ? '#32ff7e' : 'rgba(255,255,255,0.2)'} strokeWidth="2" className="transition-all duration-300" />
               <text x="80" y="104" textAnchor="middle" fill="white" className="text-[10px] font-mono font-bold">CLI</text>
@@ -174,9 +209,16 @@ export default function RequestPipeline() {
 
             {/* Gateway Node */}
             <g
-              className="cursor-pointer"
-              onMouseEnter={() => setHoveredNode('gateway')}
-              onMouseLeave={() => setHoveredNode(null)}
+              role="button"
+              tabIndex={0}
+              aria-label={nodeLabel('gateway')}
+              className="cursor-pointer outline-none focus-visible:[&_circle]:stroke-[var(--color-accent)] focus-visible:[&_circle]:[stroke-width:3px]"
+              onClick={() => showNode('gateway')}
+              onFocus={() => showNode('gateway')}
+              onBlur={() => setHoveredNode(null)}
+              onKeyDown={event => handleNodeKeyDown(event, 'gateway')}
+              onMouseEnter={() => showNode('gateway')}
+              onMouseLeave={hideNodeAfterPointer}
             >
               <circle cx="200" cy="100" r="20" fill="#11171d" stroke={hoveredNode === 'gateway' ? '#32ff7e' : 'rgba(255,255,255,0.2)'} strokeWidth="2" className="transition-all duration-300" />
               <text x="200" y="104" textAnchor="middle" fill="white" className="text-[9px] font-mono font-bold">GATEWAY</text>
@@ -184,9 +226,16 @@ export default function RequestPipeline() {
 
             {/* Auth Node */}
             <g
-              className="cursor-pointer"
-              onMouseEnter={() => setHoveredNode('auth')}
-              onMouseLeave={() => setHoveredNode(null)}
+              role="button"
+              tabIndex={0}
+              aria-label={nodeLabel('auth')}
+              className="cursor-pointer outline-none focus-visible:[&_circle]:stroke-[var(--color-accent)] focus-visible:[&_circle]:[stroke-width:3px]"
+              onClick={() => showNode('auth')}
+              onFocus={() => showNode('auth')}
+              onBlur={() => setHoveredNode(null)}
+              onKeyDown={event => handleNodeKeyDown(event, 'auth')}
+              onMouseEnter={() => showNode('auth')}
+              onMouseLeave={hideNodeAfterPointer}
             >
               <circle cx="320" cy="100" r="20" fill="#11171d" stroke={hoveredNode === 'auth' ? '#32ff7e' : 'rgba(255,255,255,0.2)'} strokeWidth="2" className="transition-all duration-300" />
               <text x="320" y="104" textAnchor="middle" fill="white" className="text-[9px] font-mono font-bold">AUTH</text>
@@ -194,9 +243,16 @@ export default function RequestPipeline() {
 
             {/* Business Logic Node */}
             <g
-              className="cursor-pointer"
-              onMouseEnter={() => setHoveredNode('logic')}
-              onMouseLeave={() => setHoveredNode(null)}
+              role="button"
+              tabIndex={0}
+              aria-label={nodeLabel('logic')}
+              className="cursor-pointer outline-none focus-visible:[&_circle]:stroke-[var(--color-accent)] focus-visible:[&_circle]:[stroke-width:3px]"
+              onClick={() => showNode('logic')}
+              onFocus={() => showNode('logic')}
+              onBlur={() => setHoveredNode(null)}
+              onKeyDown={event => handleNodeKeyDown(event, 'logic')}
+              onMouseEnter={() => showNode('logic')}
+              onMouseLeave={hideNodeAfterPointer}
             >
               <circle cx="460" cy="100" r="24" fill="#11171d" stroke={hoveredNode === 'logic' ? '#32ff7e' : 'rgba(255,255,255,0.2)'} strokeWidth="2" className="transition-all duration-300" />
               <text x="460" y="104" textAnchor="middle" fill="white" className="text-[9px] font-mono font-bold">
@@ -206,9 +262,16 @@ export default function RequestPipeline() {
 
             {/* Database Node */}
             <g
-              className="cursor-pointer"
-              onMouseEnter={() => setHoveredNode('db')}
-              onMouseLeave={() => setHoveredNode(null)}
+              role="button"
+              tabIndex={0}
+              aria-label={nodeLabel('db')}
+              className="cursor-pointer outline-none focus-visible:[&_circle]:stroke-[var(--color-accent)] focus-visible:[&_circle]:[stroke-width:3px]"
+              onClick={() => showNode('db')}
+              onFocus={() => showNode('db')}
+              onBlur={() => setHoveredNode(null)}
+              onKeyDown={event => handleNodeKeyDown(event, 'db')}
+              onMouseEnter={() => showNode('db')}
+              onMouseLeave={hideNodeAfterPointer}
             >
               <circle cx="620" cy="100" r="22" fill="#11171d" stroke={hoveredNode === 'db' ? '#32ff7e' : 'rgba(255,255,255,0.2)'} strokeWidth="2" className="transition-all duration-300" />
               <text x="620" y="104" textAnchor="middle" fill="white" className="text-[9px] font-mono font-bold">POSTGRES</text>
@@ -216,9 +279,16 @@ export default function RequestPipeline() {
 
             {/* Cache Node */}
             <g
-              className="cursor-pointer"
-              onMouseEnter={() => setHoveredNode('cache')}
-              onMouseLeave={() => setHoveredNode(null)}
+              role="button"
+              tabIndex={0}
+              aria-label={nodeLabel('cache')}
+              className="cursor-pointer outline-none focus-visible:[&_circle]:stroke-[var(--color-accent)] focus-visible:[&_circle]:[stroke-width:3px]"
+              onClick={() => showNode('cache')}
+              onFocus={() => showNode('cache')}
+              onBlur={() => setHoveredNode(null)}
+              onKeyDown={event => handleNodeKeyDown(event, 'cache')}
+              onMouseEnter={() => showNode('cache')}
+              onMouseLeave={hideNodeAfterPointer}
             >
               <circle cx="620" cy="160" r="18" fill="#11171d" stroke={hoveredNode === 'cache' ? '#32ff7e' : 'rgba(255,255,255,0.2)'} strokeWidth="2" className="transition-all duration-300" />
               <text x="620" y="164" textAnchor="middle" fill="white" className="text-[8px] font-mono font-bold">REDIS</text>
@@ -240,7 +310,7 @@ export default function RequestPipeline() {
       </div>
 
       {/* Node Info / Explanation Drawer */}
-      <div className="mt-6 border-t border-[rgba(255,255,255,0.06)] pt-6 h-28 flex flex-col justify-center">
+      <div id="pipeline-node-details" aria-live="polite" aria-atomic="true" className="mt-6 border-t border-[rgba(255,255,255,0.06)] pt-6 h-28 flex flex-col justify-center">
         {hoveredNode ? (
           <div>
             <div className="flex items-center gap-3">
@@ -256,9 +326,9 @@ export default function RequestPipeline() {
             </p>
           </div>
         ) : (
-          <div className="text-center text-sm font-mono text-[var(--color-text-muted)] opacity-60">
-            Pasa el cursor por encima de los nodos para explorar la arquitectura del sistema.
-            <div className="text-xs text-white/40 mt-1">Total peticiones procesadas: {requestCount}</div>
+          <div className="text-center text-sm font-mono text-[var(--color-text-muted)]">
+            Pasá el cursor o usá Tab sobre los nodos para explorar la arquitectura del sistema.
+            <div aria-hidden="true" className="text-xs text-white/60 mt-1">Total peticiones procesadas: {requestCount}</div>
           </div>
         )}
       </div>

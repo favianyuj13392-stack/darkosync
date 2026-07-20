@@ -4,7 +4,7 @@
 
 <section id="hero" class="relative flex min-h-[90vh] w-full items-center justify-center overflow-hidden pt-32 pb-20 md:min-h-screen md:pt-40">
   <!-- Infrastructure Pulse Canvas Overlay (Technical grid backdrop) -->
-  <div class="pointer-events-none absolute inset-0 z-0 select-none opacity-30 transition-opacity duration-1000 hero-grid-container" id="grid-spotlight">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0 select-none opacity-30 transition-opacity duration-1000 hero-grid-container" id="grid-spotlight">
     <!-- Static Grid Lines -->
     <div class="absolute inset-0 bg-grid-pattern"></div>
     <!-- Interactive Spotlight Overlay containing hidden technical details -->
@@ -18,7 +18,7 @@
   </div>
 
   <!-- Radial gradient to fade grids on edges -->
-  <div class="pointer-events-none absolute inset-0 z-0 bg-radial-vignette"></div>
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0 bg-radial-vignette"></div>
 
   <!-- Content Container -->
   <div class="relative z-10 mx-auto w-full max-w-5xl px-6 text-center md:px-8">
@@ -45,13 +45,13 @@
     <div class="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
       <a href="#diagnostico" class="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-accent)] px-8 py-4 text-base font-bold text-black transition-all duration-300 hover:scale-[1.02] hover:bg-white sm:w-auto">
         <span>Comenzar Diagnóstico</span>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1">
+        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1">
           <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.22 5.03a.75.75 0 111.06-1.06l5.5 5.5a.75.75 0 010 1.06l-5.5 5.5a.75.75 0 11-1.06-1.06l4.168-4.17H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
         </svg>
       </a>
       <a href="#pipeline" class="group flex w-full items-center justify-center gap-2 rounded-xl border border-[rgba(255,255,255,0.12)] bg-[rgba(255,255,255,0.02)] px-8 py-4 text-base font-bold text-white transition-all duration-300 hover:border-white hover:bg-[rgba(255,255,255,0.06)] sm:w-auto">
         <span>Ver cómo trabajamos</span>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5">
+        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5">
           <line x1="12" y1="5" x2="12" y2="19"></line>
           <polyline points="19 12 12 19 5 12"></polyline>
         </svg>
@@ -94,6 +94,12 @@
   .hero-grid-container div[class*="absolute"]:nth-child(2n) {
     animation-delay: 2s;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-grid-container div[class*="absolute"] {
+      animation: none;
+    }
+  }
 </style>
 
 <script>
@@ -102,7 +108,7 @@
 
   if (hero && spotlight) {
     // Only track cursor spotlight on devices with hover interaction capabilities (precision pointing)
-    const mediaQuery = window.matchMedia('(hover: hover)');
+    const mediaQuery = window.matchMedia('(hover: hover) and (prefers-reduced-motion: no-preference)');
     
     if (mediaQuery.matches) {
       hero.addEventListener('mousemove', (e) => {

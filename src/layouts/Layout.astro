@@ -21,6 +21,12 @@ const { title, description, lang = 'es' } = Astro.props;
     <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   </head>
   <body>
+    <a
+      href="#main-content"
+      class="fixed left-4 top-4 z-[100] -translate-y-24 rounded-lg bg-[var(--color-accent)] px-4 py-3 font-semibold text-black shadow-lg transition-transform focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-white"
+    >
+      Saltar al contenido principal
+    </a>
     <slot />
   </body>
 </html>
