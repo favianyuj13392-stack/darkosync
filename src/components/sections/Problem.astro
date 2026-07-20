@@ -2,70 +2,70 @@
 // src/components/sections/Problem.astro
 ---
 
-<section class="relative border-t border-[rgba(255,255,255,0.04)] py-24 md:py-32">
+<section class="relative py-24 md:py-32 ds-reveal">
   <div class="mx-auto max-w-7xl px-6 md:px-8">
     <div class="grid gap-12 lg:grid-cols-12 lg:gap-8">
       <!-- Title column -->
       <div class="lg:col-span-5">
-        <p class="text-sm font-semibold tracking-wider text-[var(--color-accent)] uppercase">
+        <p class="text-sm font-semibold tracking-wider text-[var(--ds-muted)] uppercase">
           La realidad operativa
         </p>
-        <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl leading-tight">
-          El papel y el desorden manual te están costando dinero.
+        <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-[var(--ds-text)] sm:text-4xl md:text-5xl leading-tight font-display">
+          El desorden te está costando horas y ventas.
         </h2>
-        <p class="mt-6 text-lg leading-relaxed text-[var(--color-text-muted)]">
-          Los sistemas no fallan por falta de botones llamativos. Fallan cuando la complejidad operativa supera tu estructura de trabajo, o cuando sigues dependiendo de planillas de Excel aisladas y registros manuales vulnerables a errores humanos.
+        <p class="mt-6 text-lg leading-relaxed text-[var(--ds-muted)]">
+          Las empresas no dejan de crecer por falta de voluntad, sino porque su forma de trabajar colapsa al aumentar el volumen. Cuando todo depende de planillas, mensajes de WhatsApp sueltos y la memoria de una persona, el límite llega rápido.
         </p>
       </div>
 
       <!-- Problem cards column -->
       <div class="space-y-6 lg:col-span-7">
         <!-- Problem Card 1 -->
-        <div class="group relative overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.01)] p-6 transition-all duration-300 hover:border-[rgba(50,255,126,0.2)] hover:bg-[rgba(255,255,255,0.02)] md:p-8">
+        <div class="group relative overflow-hidden rounded-2xl border border-[var(--ds-border)] bg-[var(--ds-surface)] p-6 transition-all duration-300 hover:border-[var(--ds-accent)] md:p-8">
           <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
-            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[rgba(239,68,68,0.1)] text-red-400 font-bold font-mono text-lg border border-[rgba(239,68,68,0.15)] group-hover:bg-red-500 group-hover:text-black transition-colors duration-300">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red-500/10 text-red-500 font-bold font-mono text-lg border border-red-500/20 group-hover:bg-red-500 group-hover:text-black transition-colors duration-300">
               01
             </span>
             <div>
-              <h3 class="text-xl font-bold text-white transition-colors duration-300 group-hover:text-[var(--color-accent)]">
-                Fuga Operativa por Tareas Manuales
+              <h3 class="text-xl font-bold text-[var(--ds-text)] transition-colors duration-300 group-hover:text-[var(--ds-accent)]">
+                Tiempo perdido en tareas manuales
               </h3>
-              <p class="mt-2 text-base leading-relaxed text-[var(--color-text-muted)]">
-                Tus empleados pasan horas copiando datos de un papel a otro o actualizando stock de forma manual. Cada hora dedicada a tareas mecánicas es tiempo perdido para generar valor o atender mejor a tus clientes.
+              <p class="mt-2 text-base leading-relaxed text-[var(--ds-muted)]">
+                Tu equipo pasa horas copiando datos de un lado a otro, verificando pagos y actualizando inventarios a mano. Cada minuto en tareas mecánicas es tiempo que no se invierte en vender o atender mejor.
               </p>
             </div>
           </div>
         </div>
 
         <!-- Problem Card 2 -->
-        <div class="group relative overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.01)] p-6 transition-all duration-300 hover:border-[rgba(50,255,126,0.2)] hover:bg-[rgba(255,255,255,0.02)] md:p-8">
+        <div class="group relative overflow-hidden rounded-2xl border border-[var(--ds-border)] bg-[var(--ds-surface)] p-6 transition-all duration-300 hover:border-[var(--ds-accent)] md:p-8">
           <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
-            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[rgba(245,158,11,0.1)] text-amber-400 font-bold font-mono text-lg border border-[rgba(245,158,11,0.15)] group-hover:bg-amber-500 group-hover:text-black transition-colors duration-300">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-amber-500 font-bold font-mono text-lg border border-amber-500/20 group-hover:bg-amber-500 group-hover:text-black transition-colors duration-300">
               02
             </span>
             <div>
-              <h3 class="text-xl font-bold text-white transition-colors duration-300 group-hover:text-[var(--color-accent)]">
-                Sistemas Rígidos y Enlatados
+              <h3 class="text-xl font-bold text-[var(--ds-text)] transition-colors duration-300 group-hover:text-[var(--ds-accent)]">
+                Software rígido que no se adapta
               </h3>
-              <p class="mt-2 text-base leading-relaxed text-[var(--color-text-muted)]">
-                El software genérico te obliga a forzar tus procesos para adaptarte a él. Al final, pagas licencias caras por sistemas complejos que nadie sabe usar completamente o que no resuelven tus dolores de raíz.
+              <p class="mt-2 text-base leading-relaxed text-[var(--ds-muted)]">
+                Los sistemas genéricos te obligan a forzar la forma en la que operas para encajar en sus reglas. Terminas pagando suscripciones caras por programas que tu equipo no sabe usar o que solo resuelven la mitad del problema.
               </p>
             </div>
           </div>
         </div>
 
         <!-- Problem Card 3 -->
-        <div class="group relative overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.01)] p-6 transition-all duration-300 hover:border-[rgba(50,255,126,0.2)] hover:bg-[rgba(255,255,255,0.02)] md:p-8">
+        <div class="group relative overflow-hidden rounded-2xl border border-[var(--ds-border)] bg-[var(--ds-surface)] p-6 transition-all duration-300 hover:border-[var(--ds-accent)] md:p-8">
           <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
-            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[rgba(239,68,68,0.1)] text-red-400 font-bold font-mono text-lg border border-[rgba(239,68,68,0.15)] group-hover:bg-red-500 group-hover:text-black transition-colors duration-300">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red-500/10 text-red-500 font-bold font-mono text-lg border border-red-500/20 group-hover:bg-red-500 group-hover:text-black transition-colors duration-300">
               03
             </span>
             <div>
-              <h3 class="text-xl font-bold text-white transition-colors duration-300 group-hover:text-[var(--color-accent)]">
-                Ventas Perdidas por Lentitud o Fricción
+              <h3 class="text-xl font-bold text-[var(--ds-text)] transition-colors duration-300 group-hover:text-[var(--ds-accent)]">
+                Falta de visibilidad en tiempo real
               </h3>
-              <p class="mt-2 text-base leading-relaxed text-[var(--color-text-muted)]">
-                Sin un e-commerce robusto ni respuestas automatizadas inmediatas por canales digitales, tus clientes se van con la competencia que sí les responde al instante y les facilita el pago inmediato.
+              <p class="mt-2 text-base leading-relaxed text-[var(--ds-muted)]">
+                No sabes con exactitud qué se vendió hoy, qué falta en inventario o quién te debe dinero sin tener que pedir reportes manuales. Tomar decisiones a ciegas frena cualquier posibilidad de expansión.
               </p>
             </div>
           </div>

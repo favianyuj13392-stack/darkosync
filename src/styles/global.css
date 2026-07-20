@@ -1,24 +1,49 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
+  --ds-bg:        #0A0C0F;
+  --ds-surface:   #0E1115;
+  --ds-border:    rgba(255,255,255,0.07);
+  --ds-text:      #F0F2EE;
+  --ds-muted:     #8A9490;
+  --ds-accent:    #32FF7E;
+  --ds-accent-dim: rgba(50,255,126,0.08);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Inter', -apple-system, sans-serif;
   color-scheme: dark;
-  --color-background: #0b0f13;
-  --color-surface: #11171d;
-  --color-text: #f4f7f5;
-  --color-text-muted: #9aa6a0;
-  --color-accent: #32ff7e;
 }
 
 html {
-  background: var(--color-background);
+  background: var(--ds-bg);
+  scroll-behavior: smooth;
 }
 
 body {
   min-width: 320px;
   margin: 0;
-  background: var(--color-background);
-  color: var(--color-text);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--ds-bg);
+  color: var(--ds-text);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
 }
 
 *,
@@ -28,6 +53,18 @@ body {
 }
 
 ::selection {
-  background: var(--color-accent);
-  color: var(--color-background);
+  background: var(--ds-accent);
+  color: var(--ds-bg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ds-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .ds-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

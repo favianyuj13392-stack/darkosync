@@ -2,7 +2,7 @@
 // src/components/sections/Footer.astro
 ---
 
-<footer class="relative border-t border-[rgba(255,255,255,0.04)] bg-[rgba(11,15,19,0.3)] py-16">
+<footer class="relative border-t border-[var(--ds-border)] bg-[var(--ds-bg)] py-16 ds-reveal">
   <div class="mx-auto max-w-7xl px-6 md:px-8">
     <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
       
@@ -11,23 +11,23 @@
         <a href="/" class="group flex items-center gap-3 font-semibold tracking-wider text-xl text-white select-none" aria-label="DarkoSync, Inicio">
           <div class="relative h-10 w-10 overflow-visible">
             <svg aria-hidden="true" focusable="false" viewBox="0 0 100 100" class="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="50,5 90,28 90,72 50,95 10,72 10,28" stroke="url(#footer-logo-grad)" stroke-width="6" stroke-linejoin="round" class="transition-all duration-500 group-hover:stroke-[#32ff7e]" />
+              <polygon points="50,5 90,28 90,72 50,95 10,72 10,28" stroke="url(#footer-logo-grad)" stroke-width="6" stroke-linejoin="round" class="transition-all duration-500 group-hover:stroke-[var(--ds-accent)]" />
               <path d="M28 35 H42 C49 35 52 38 52 45 C52 52 49 55 42 55 H28 V35 Z" fill="none" stroke="white" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" />
               <path d="M48 55 L65 35 H55 L75 10 L58 38 H68 L48 55 Z" fill="url(#footer-logo-grad)" />
               <defs>
                 <linearGradient id="footer-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#32ff7e" />
+                  <stop offset="0%" stop-color="#32FF7E" />
                   <stop offset="100%" stop-color="#00e68a" />
                 </linearGradient>
               </defs>
             </svg>
           </div>
-          <span class="font-bold font-mono tracking-wide text-white">
+          <span class="font-bold tracking-wide text-white font-display">
             DARKOSYNC
           </span>
         </a>
-        <p class="text-sm leading-relaxed text-[var(--color-text-muted)] max-w-sm">
-          Ingeniería de software a medida, desarrollo de agentes de IA aplicados y e-commerce de alto rendimiento. Diseñado y operado localmente desde Bolivia.
+        <p class="text-sm leading-relaxed text-[var(--ds-muted)] max-w-sm">
+          Convertimos operaciones manuales en sistemas que tu empresa puede controlar y escalar. Diseñado y operado desde Bolivia.
         </p>
       </div>
 
@@ -35,32 +35,32 @@
       <div class="lg:col-span-7 grid grid-cols-2 gap-8 sm:grid-cols-3">
         <!-- Section 1 -->
         <div class="flex flex-col gap-4">
-          <h2 class="text-xs font-mono font-bold tracking-widest text-white uppercase">Servicios</h2>
-          <ul class="flex flex-col gap-2.5 text-sm text-[var(--color-text-muted)]">
-            <li><a href="#capacidades" class="hover:text-white transition-colors duration-300">Sistemas a medida</a></li>
-            <li><a href="#capacidades" class="hover:text-white transition-colors duration-300">IA para Negocios</a></li>
-            <li><a href="#capacidades" class="hover:text-white transition-colors duration-300">E-commerce premium</a></li>
+          <h2 class="text-xs font-semibold tracking-widest text-[var(--ds-muted)] uppercase">Servicios</h2>
+          <ul class="flex flex-col gap-2.5 text-sm text-[var(--ds-text)]">
+            <li><a href="#capacidades" class="hover:text-[var(--ds-accent)] transition-colors duration-300">Gestión interna</a></li>
+            <li><a href="#capacidades" class="hover:text-[var(--ds-accent)] transition-colors duration-300">Ventas digitales</a></li>
+            <li><a href="#capacidades" class="hover:text-[var(--ds-accent)] transition-colors duration-300">Automatización</a></li>
           </ul>
         </div>
 
         <!-- Section 2 -->
         <div class="flex flex-col gap-4">
-          <h2 class="text-xs font-mono font-bold tracking-widest text-white uppercase">Compañía</h2>
-          <ul class="flex flex-col gap-2.5 text-sm text-[var(--color-text-muted)]">
-            <li><a href="#casos" class="hover:text-white transition-colors duration-300">Casos de éxito</a></li>
-            <li><a href="#proceso" class="hover:text-white transition-colors duration-300">Metodología</a></li>
-            <li><a href="#faq" class="hover:text-white transition-colors duration-300">Preguntas frecuentes</a></li>
+          <h2 class="text-xs font-semibold tracking-widest text-[var(--ds-muted)] uppercase">Compañía</h2>
+          <ul class="flex flex-col gap-2.5 text-sm text-[var(--ds-text)]">
+            <li><a href="#casos" class="hover:text-[var(--ds-accent)] transition-colors duration-300">Casos reales</a></li>
+            <li><a href="#proceso" class="hover:text-[var(--ds-accent)] transition-colors duration-300">Método de trabajo</a></li>
+            <li><a href="#faq" class="hover:text-[var(--ds-accent)] transition-colors duration-300">Preguntas frecuentes</a></li>
           </ul>
         </div>
 
         <!-- Section 3 -->
         <div class="flex flex-col gap-4 col-span-2 sm:col-span-1">
-          <h2 class="text-xs font-mono font-bold tracking-widest text-white uppercase">Contacto</h2>
-          <ul class="flex flex-col gap-2.5 text-sm text-[var(--color-text-muted)] font-mono">
+          <h2 class="text-xs font-semibold tracking-widest text-[var(--ds-muted)] uppercase">Contacto</h2>
+          <ul class="flex flex-col gap-2.5 text-sm text-[var(--ds-text)] font-mono">
             <li class="text-xs">darkosync@gmail.com</li>
             <li>
-              <a href="#diagnostico" class="inline-flex items-center gap-1.5 text-xs text-[var(--color-accent)] hover:text-white transition-colors duration-300">
-                <span>Agendar reunión</span>
+              <a href="#diagnostico" class="inline-flex items-center gap-1.5 text-xs text-[var(--ds-accent)] hover:text-white transition-colors duration-300">
+                <span>Solicitar diagnóstico</span>
                 <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-3.5 w-3.5">
                   <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.22 5.03a.75.75 0 111.06-1.06l5.5 5.5a.75.75 0 010 1.06l-5.5 5.5a.75.75 0 11-1.06-1.06l4.168-4.17H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
                 </svg>
@@ -73,12 +73,8 @@
     </div>
 
     <!-- Divider & Bottom metadata -->
-    <div class="mt-12 border-t border-white/5 pt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-xs text-[var(--color-text-muted)] font-mono">
-      <p>© {new Date().getFullYear()} DarkoSync. Todos los derechos reservados.</p>
-      <div class="flex gap-4">
-        <span class="text-white/20">// VISIBLE_ENGINEERING</span>
-        <span class="text-[var(--color-accent)]">LOC: BO_EST</span>
-      </div>
+    <div class="mt-12 border-t border-[var(--ds-border)] pt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-xs text-[var(--ds-muted)] font-mono">
+      <p>© 2025 DarkoSync. Bolivia.</p>
     </div>
   </div>
 </footer>

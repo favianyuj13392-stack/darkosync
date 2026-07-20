@@ -23,10 +23,17 @@ const { title, description, lang = 'es' } = Astro.props;
   <body>
     <a
       href="#main-content"
-      class="fixed left-4 top-4 z-[100] -translate-y-24 rounded-lg bg-[var(--color-accent)] px-4 py-3 font-semibold text-black shadow-lg transition-transform focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-white"
+      class="fixed left-4 top-4 z-[100] -translate-y-24 rounded-lg bg-[var(--ds-accent)] px-4 py-3 font-semibold text-black shadow-lg transition-transform focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-white"
     >
       Saltar al contenido principal
     </a>
     <slot />
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); observer.unobserve(e.target); }}),
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll('.ds-reveal').forEach(el => observer.observe(el));
+    </script>
   </body>
 </html>

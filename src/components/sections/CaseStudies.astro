@@ -2,109 +2,64 @@
 // src/components/sections/CaseStudies.astro
 ---
 
-<section id="casos" class="relative border-t border-[rgba(255,255,255,0.04)] py-24 md:py-32 bg-[rgba(255,255,255,0.005)]">
+<section id="casos" class="relative py-24 md:py-32 ds-reveal">
   <div class="mx-auto max-w-7xl px-6 md:px-8">
-    <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between mb-16 md:mb-24">
-      <div class="max-w-2xl">
-        <p class="text-sm font-semibold tracking-wider text-[var(--color-accent)] uppercase">
-          Nuestra Trayectoria
-        </p>
-        <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl leading-tight">
-          Productos reales que resuelven dolores reales.
-        </h2>
-        <p class="mt-6 text-lg leading-relaxed text-[var(--color-text-muted)]">
-          No solo escribimos código para otros: desarrollamos y operamos plataformas propias que transforman negocios enteros en Bolivia.
-        </p>
-      </div>
-      <div>
-        <span class="text-xs font-mono text-[var(--color-text-muted)] border border-white/10 rounded-full px-4 py-2 bg-white/5">
-          *Datos de eficiencia basados en simulaciones operativas
-        </span>
-      </div>
-    </div>
-
-    <!-- Case Studies Cards Grid -->
-    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-      <!-- Case Study 1: DarkoGym -->
-      <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(11,15,19,0.3)] p-6 transition-all duration-300 hover:border-[rgba(50,255,126,0.2)] hover:bg-[rgba(255,255,255,0.01)] md:p-8">
+    <div class="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 lg:gap-24">
+      
+      <!-- Left: Metadata -->
+      <aside class="flex flex-col gap-6 md:sticky md:top-32 h-fit">
         <div>
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] font-mono font-bold tracking-widest text-[var(--color-accent)] uppercase">SaaS Activo</span>
-            <span class="text-xs text-white/40 font-mono">DarkoGym</span>
-          </div>
-          <h3 class="mt-4 text-xl font-bold text-white transition-colors duration-300 group-hover:text-[var(--color-accent)]">
-            Gestión de Gimnasios y Accesos
-          </h3>
-          <p class="mt-4 text-sm leading-relaxed text-[var(--color-text-muted)]">
-            Digitalización completa de inscripciones, control de cobros recurrentes y sincronización en tiempo real con molinetes y accesos físicos.
-          </p>
-          <div class="mt-6 border-t border-white/5 pt-6">
-            <p class="text-xs font-mono text-white/40">Métrica Proyectada:</p>
-            <p class="text-2xl font-bold text-white mt-1 group-hover:text-[var(--color-accent)] transition-colors duration-300">
-              -80% tiempo admin.
-            </p>
-          </div>
+          <span class="text-xs font-semibold tracking-wider text-[var(--ds-muted)] uppercase">Caso de estudio</span>
+          <h2 class="mt-2 text-2xl font-bold text-[var(--ds-text)] font-display">DarkoGym</h2>
         </div>
-        <div class="mt-8 flex flex-wrap gap-2">
-          <span class="rounded bg-white/5 px-2 py-1 text-[10px] font-mono text-white/60">React</span>
-          <span class="rounded bg-white/5 px-2 py-1 text-[10px] font-mono text-white/60">Postgres</span>
-          <span class="rounded bg-white/5 px-2 py-1 text-[10px] font-mono text-white/60">IoT Integration</span>
-        </div>
-      </div>
-
-      <!-- Case Study 2: Veterinarias -->
-      <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(11,15,19,0.3)] p-6 transition-all duration-300 hover:border-[rgba(50,255,126,0.2)] hover:bg-[rgba(255,255,255,0.01)] md:p-8">
+        <div class="h-px w-full bg-[var(--ds-border)]"></div>
         <div>
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] font-mono font-bold tracking-widest text-[var(--color-accent)] uppercase">SaaS Activo</span>
-            <span class="text-xs text-white/40 font-mono">AnimalVet</span>
-          </div>
-          <h3 class="mt-4 text-xl font-bold text-white transition-colors duration-300 group-hover:text-[var(--color-accent)]">
-            Clínicas y Turnos Veterinarios
-          </h3>
-          <p class="mt-4 text-sm leading-relaxed text-[var(--color-text-muted)]">
-            Historiales médicos unificados, recetas digitales, control de stock médico y agendamiento interactivo con notificaciones de vacunación.
-          </p>
-          <div class="mt-6 border-t border-white/5 pt-6">
-            <p class="text-xs font-mono text-white/40">Métrica Proyectada:</p>
-            <p class="text-2xl font-bold text-white mt-1 group-hover:text-[var(--color-accent)] transition-colors duration-300">
-              Notificaciones 100% aut.
-            </p>
-          </div>
+          <span class="text-xs font-semibold tracking-wider text-[var(--ds-muted)] uppercase">Sector</span>
+          <p class="mt-1 text-sm text-[var(--ds-text)]">Fitness / Gestión de accesos</p>
         </div>
-        <div class="mt-8 flex flex-wrap gap-2">
-          <span class="rounded bg-white/5 px-2 py-1 text-[10px] font-mono text-white/60">Astro</span>
-          <span class="rounded bg-white/5 px-2 py-1 text-[10px] font-mono text-white/60">Supabase</span>
-          <span class="rounded bg-white/5 px-2 py-1 text-[10px] font-mono text-white/60">WhatsApp API</span>
-        </div>
-      </div>
+      </aside>
 
-      <!-- Case Study 3: Minería -->
-      <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(11,15,19,0.3)] p-6 transition-all duration-300 hover:border-[rgba(50,255,126,0.2)] hover:bg-[rgba(255,255,255,0.01)] md:p-8">
-        <div>
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] font-mono font-bold tracking-widest text-amber-500 uppercase">En Desarrollo</span>
-            <span class="text-xs text-white/40 font-mono">DarkoMining</span>
-          </div>
-          <h3 class="mt-4 text-xl font-bold text-white transition-colors duration-300 group-hover:text-[var(--color-accent)]">
-            Operaciones y Logística Minera
-          </h3>
-          <p class="mt-4 text-sm leading-relaxed text-[var(--color-text-muted)]">
-            Trazabilidad de flotas, control de combustible y reportes de seguridad en terreno con soporte de sincronización offline (SQLite local).
+      <!-- Right: Narrative -->
+      <article class="flex flex-col gap-12">
+        <section>
+          <h3 class="text-lg font-bold text-[var(--ds-text)] mb-3">Situación inicial</h3>
+          <p class="text-[var(--ds-muted)] leading-relaxed">
+            Gimnasio con crecimiento acelerado administrando accesos y cobros en planillas de Excel y cuadernos físicos.
           </p>
-          <div class="mt-6 border-t border-white/5 pt-6">
-            <p class="text-xs font-mono text-white/40">Métrica Proyectada:</p>
-            <p class="text-2xl font-bold text-white mt-1 group-hover:text-[var(--color-accent)] transition-colors duration-300">
-              Soporte 100% Offline
-            </p>
-          </div>
+        </section>
+
+        <section>
+          <h3 class="text-lg font-bold text-[var(--ds-text)] mb-3">Cuello de botella</h3>
+          <p class="text-[var(--ds-muted)] leading-relaxed">
+            Ingresos de miembros con cuotas vencidas no detectados en tiempo real. Registro manual demorando más de 2 minutos por persona en horarios pico.
+          </p>
+        </section>
+
+        <!-- Placeholder for image -->
+        <div class="w-full flex items-center justify-center p-8 border border-dashed border-[var(--ds-border)] bg-[var(--ds-accent-dim)] rounded-lg min-h-[300px]">
+          <p class="text-sm text-[var(--ds-accent)] font-mono text-center max-w-sm">
+            Captura de pantalla del sistema: <br/>[PENDIENTE — requiere autorización del cliente]
+          </p>
         </div>
-        <div class="mt-8 flex flex-wrap gap-2">
-          <span class="rounded bg-white/5 px-2 py-1 text-[10px] font-mono text-white/60">SQLite / Go</span>
-          <span class="rounded bg-white/5 px-2 py-1 text-[10px] font-mono text-white/60">Offline-Sync</span>
-          <span class="rounded bg-white/5 px-2 py-1 text-[10px] font-mono text-white/60">React Native</span>
-        </div>
-      </div>
+
+        <section>
+          <h3 class="text-lg font-bold text-[var(--ds-text)] mb-3">Solución</h3>
+          <p class="text-[var(--ds-muted)] leading-relaxed">
+            Sistema de control de acceso integrado con base de datos centralizada y lector físico de credenciales.
+          </p>
+        </section>
+
+        <section>
+          <h3 class="text-lg font-bold text-[var(--ds-text)] mb-3">Resultado observable</h3>
+          <p class="text-[var(--ds-text)] leading-relaxed bg-[var(--ds-surface)] p-6 rounded-lg border border-[var(--ds-border)]">
+            El control de ingreso en recepción se realiza de forma automática validando membresías al instante. Se eliminaron las filas de espera en horarios pico y se recuperó la visibilidad exacta de pagos vencidos sin necesidad de conciliaciones manuales a fin de mes.
+            <br/><br/>
+            <span class="text-xs text-[var(--ds-accent)] font-mono uppercase">[MÉTRICAS PENDIENTES VALIDACIÓN]</span>
+          </p>
+        </section>
+      </article>
+
     </div>
   </div>
 </section>
+<div class="w-full h-px bg-[var(--ds-border)]"></div>

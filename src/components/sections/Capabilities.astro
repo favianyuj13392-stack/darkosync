@@ -2,150 +2,150 @@
 // src/components/sections/Capabilities.astro
 ---
 
-<section id="capacidades" class="relative border-t border-[rgba(255,255,255,0.04)] py-24 md:py-32">
+<section id="capacidades" class="relative py-24 md:py-32 bg-[var(--ds-surface)] border-y border-[var(--ds-border)] ds-reveal">
   <div class="mx-auto max-w-7xl px-6 md:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-16 md:mb-24">
-      <p class="text-sm font-semibold tracking-wider text-[var(--color-accent)] uppercase">
-        Nuestras Especialidades
-      </p>
-      <h2 class="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl leading-tight">
-        Sistemas robustos diseñados para rendir.
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl font-extrabold tracking-tight text-[var(--ds-text)] sm:text-4xl md:text-5xl leading-tight font-display">
+        Lo que construimos
       </h2>
-      <p class="mt-6 text-lg leading-relaxed text-[var(--color-text-muted)]">
-        No compramos plantillas ni usamos soluciones enlatadas. Desarrollamos la infraestructura crítica que tu negocio necesita para escalar y facturar más.
-      </p>
     </div>
 
-    <!-- Bento Grid Container -->
-    <div class="bento-grid grid gap-6 md:grid-cols-6 lg:grid-cols-12">
-      <!-- Card 1: Custom Software (Sistemas a medida) - 6 cols md / 8 cols lg -->
-      <div class="bento-card relative overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.01)] p-8 transition-all duration-300 md:col-span-3 lg:col-span-8 flex flex-col justify-between group min-h-[350px]">
-        <div class="bento-glow absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div class="relative z-10">
-          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-[rgba(50,255,126,0.1)] text-[var(--color-accent)] border border-[rgba(50,255,126,0.15)]">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-            </svg>
-          </div>
-          <h3 class="text-2xl font-bold text-white group-hover:text-[var(--color-accent)] transition-colors duration-300">Sistemas y Backend a Medida</h3>
-          <p class="mt-4 text-base leading-relaxed text-[var(--color-text-muted)] max-w-xl">
-            Desarrollamos soluciones lógicas desde las bases para digitalizar tus operaciones complejas. Ideal para control de stock, gestión administrativa o flujos críticos que el software comercial no logra resolver.
-          </p>
-        </div>
-        <div class="relative mt-8 h-20 w-full overflow-hidden border border-[rgba(255,255,255,0.04)] rounded-lg bg-[rgba(11,15,19,0.5)] p-4 flex items-center justify-between font-mono text-xs text-[var(--color-accent)]">
-          <div class="flex flex-col gap-1">
-            <span>GET /api/inventory/sync</span>
-            <span class="text-white opacity-40">db_pool_status: healthy</span>
-          </div>
-          <div class="h-2 w-2 rounded-full bg-[var(--color-accent)] animate-ping"></div>
-        </div>
+    <!-- Tabs UI -->
+    <div class="max-w-4xl mx-auto">
+      
+      <!-- Tab List -->
+      <div class="flex flex-wrap gap-2 justify-center mb-12 border-b border-[var(--ds-border)] pb-4" role="tablist" aria-label="Especialidades">
+        <button id="tab-1" type="button" role="tab" aria-selected="true" aria-controls="panel-1" class="tab-btn px-6 py-2 text-sm font-medium rounded-full transition-colors bg-[var(--ds-accent)] text-black focus:outline-none focus:ring-2 focus:ring-[var(--ds-accent)] focus:ring-offset-2 focus:ring-offset-[var(--ds-bg)]">
+          Gestión interna
+        </button>
+        <button id="tab-2" type="button" role="tab" aria-selected="false" aria-controls="panel-2" class="tab-btn px-6 py-2 text-sm font-medium rounded-full transition-colors text-[var(--ds-muted)] hover:text-white focus:outline-none focus:ring-2 focus:ring-[var(--ds-accent)] focus:ring-offset-2 focus:ring-offset-[var(--ds-bg)]">
+          Ventas digitales
+        </button>
+        <button id="tab-3" type="button" role="tab" aria-selected="false" aria-controls="panel-3" class="tab-btn px-6 py-2 text-sm font-medium rounded-full transition-colors text-[var(--ds-muted)] hover:text-white focus:outline-none focus:ring-2 focus:ring-[var(--ds-accent)] focus:ring-offset-2 focus:ring-offset-[var(--ds-bg)]">
+          Automatización
+        </button>
       </div>
 
-      <!-- Card 2: AI Applied (IA aplicada) - 3 cols md / 4 cols lg -->
-      <div class="bento-card relative overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.01)] p-8 transition-all duration-300 md:col-span-3 lg:col-span-4 flex flex-col justify-between group min-h-[350px]">
-        <div class="bento-glow absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div class="relative z-10">
-          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-[rgba(50,255,126,0.1)] text-[var(--color-accent)] border border-[rgba(50,255,126,0.15)]">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-            </svg>
-          </div>
-          <h3 class="text-2xl font-bold text-white group-hover:text-[var(--color-accent)] transition-colors duration-300">IA para tu Negocio</h3>
-          <p class="mt-4 text-sm leading-relaxed text-[var(--color-text-muted)]">
-            Automatizamos la atención, clasificación de leads o toma de decisiones de tus equipos. Implementamos IA con un propósito claro: bajar costes y agilizar respuestas inmediatas sin pérdidas de contexto.
+      <!-- Tab Panels -->
+      <div class="relative min-h-[300px]">
+        
+        <!-- Panel 1 -->
+        <div id="panel-1" role="tabpanel" tabindex="0" aria-labelledby="tab-1" class="tab-panel absolute top-0 left-0 w-full transition-all duration-500 ease-out opacity-100 translate-x-0">
+          <h3 class="text-2xl font-bold text-[var(--ds-text)] font-display mb-4">Sistemas que ordenan la casa</h3>
+          <p class="text-[var(--ds-muted)] leading-relaxed mb-4">
+            Construimos software privado para que controles qué entra, qué sale y quién hace qué dentro de tu empresa. Sin depender de licencias por usuario y adaptado exactamente a tus reglas de negocio.
           </p>
+          <p class="text-[var(--ds-muted)] leading-relaxed mb-6">
+            Ideal para operaciones logísticas, clínicas o fábricas que necesitan un sistema central y único.
+          </p>
+          <ul class="flex flex-col gap-3">
+            <li class="flex items-start gap-2 text-sm text-[var(--ds-text)]">
+              <span class="text-[var(--ds-accent)]">&rarr;</span> Control de inventarios y almacenes
+            </li>
+            <li class="flex items-start gap-2 text-sm text-[var(--ds-text)]">
+              <span class="text-[var(--ds-accent)]">&rarr;</span> Gestión de accesos, roles y personal
+            </li>
+            <li class="flex items-start gap-2 text-sm text-[var(--ds-text)]">
+              <span class="text-[var(--ds-accent)]">&rarr;</span> Reportes financieros y operativos en tiempo real
+            </li>
+          </ul>
         </div>
-        <div class="relative mt-8 h-20 w-full overflow-hidden border border-[rgba(255,255,255,0.04)] rounded-lg bg-[rgba(11,15,19,0.5)] p-4 flex flex-col justify-center font-mono text-[10px] gap-1.5 text-white/60">
-          <div class="flex items-center justify-between">
-            <span>LLM_STREAM: 250 t/s</span>
-            <span class="text-[var(--color-accent)]">99.8% match</span>
-          </div>
-          <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
-            <div class="bg-[var(--color-accent)] h-full w-[85%] rounded-full"></div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Card 3: E-commerce - 3 cols md / 4 cols lg -->
-      <div class="bento-card relative overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.01)] p-8 transition-all duration-300 md:col-span-3 lg:col-span-4 flex flex-col justify-between group min-h-[350px]">
-        <div class="bento-glow absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div class="relative z-10">
-          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-[rgba(50,255,126,0.1)] text-[var(--color-accent)] border border-[rgba(50,255,126,0.15)]">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-            </svg>
-          </div>
-          <h3 class="text-2xl font-bold text-white group-hover:text-[var(--color-accent)] transition-colors duration-300">E-commerce de Alta Disponibilidad</h3>
-          <p class="mt-4 text-sm leading-relaxed text-[var(--color-text-muted)]">
-            Tu tienda virtual debe estar abierta siempre. Construimos e-commerce rápidos, con integraciones de pago locales y sistemas de inventario sincronizados en tiempo real sin caídas de servidor.
+        <!-- Panel 2 -->
+        <div id="panel-2" role="tabpanel" tabindex="0" aria-labelledby="tab-2" class="tab-panel absolute top-0 left-0 w-full transition-all duration-500 ease-out opacity-0 translate-x-8 invisible pointer-events-none">
+          <h3 class="text-2xl font-bold text-[var(--ds-text)] font-display mb-4">Canales de venta que no duermen</h3>
+          <p class="text-[var(--ds-muted)] leading-relaxed mb-4">
+            Diseñamos plataformas de comercio electrónico y catálogos transaccionales rápidos y confiables. Tus clientes podrán comprar desde su celular a cualquier hora, sin fricción y con métodos de pago locales integrados.
           </p>
+          <p class="text-[var(--ds-muted)] leading-relaxed mb-6">
+            Tu tienda conectada directamente a tu inventario real para que nunca vendas lo que no tienes.
+          </p>
+          <ul class="flex flex-col gap-3">
+            <li class="flex items-start gap-2 text-sm text-[var(--ds-text)]">
+              <span class="text-[var(--ds-accent)]">&rarr;</span> Tiendas en línea de alta velocidad
+            </li>
+            <li class="flex items-start gap-2 text-sm text-[var(--ds-text)]">
+              <span class="text-[var(--ds-accent)]">&rarr;</span> Pasarelas de pago y facturación integradas
+            </li>
+            <li class="flex items-start gap-2 text-sm text-[var(--ds-text)]">
+              <span class="text-[var(--ds-accent)]">&rarr;</span> Catálogos digitales autoadministrables
+            </li>
+          </ul>
         </div>
-        <div class="relative mt-8 h-20 w-full overflow-hidden border border-[rgba(255,255,255,0.04)] rounded-lg bg-[rgba(11,15,19,0.5)] p-4 flex items-center justify-between font-mono text-[10px] text-white/50">
-          <div class="flex flex-col gap-1">
-            <span>Active transactions</span>
-            <span class="text-[var(--color-accent)] font-bold text-sm">99.99% Uptime</span>
-          </div>
-          <svg class="h-10 w-24 overflow-visible" viewBox="0 0 100 40">
-            <path d="M0,35 Q15,20 30,28 T60,10 T90,20 T100,5" fill="none" stroke="#32ff7e" stroke-width="2" />
-          </svg>
-        </div>
-      </div>
 
-      <!-- Card 4: Automation & Integrations - 3 cols md / 8 cols lg -->
-      <div class="bento-card relative overflow-hidden rounded-2xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.01)] p-8 transition-all duration-300 md:col-span-3 lg:col-span-8 flex flex-col justify-between group min-h-[350px]">
-        <div class="bento-glow absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div class="relative z-10">
-          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-[rgba(50,255,126,0.1)] text-[var(--color-accent)] border border-[rgba(50,255,126,0.15)]">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.656 48.656 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3M4.5 12a48.654 48.654 0 00.138 3.662 4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l-3 3m3-3l3 3" />
-            </svg>
-          </div>
-          <h3 class="text-2xl font-bold text-white group-hover:text-[var(--color-accent)] transition-colors duration-300">Automatizaciones e Integración de APIs</h3>
-          <p class="mt-4 text-base leading-relaxed text-[var(--color-text-muted)] max-w-xl">
-            ¿Tenés sistemas viejos pero querés modernizar tu CRM, facturación o ERP locales en Bolivia? Conectamos y automatizamos flujos de datos sin pérdidas de información, haciendo que tus aplicaciones hablen entre sí de manera confiable.
+        <!-- Panel 3 -->
+        <div id="panel-3" role="tabpanel" tabindex="0" aria-labelledby="tab-3" class="tab-panel absolute top-0 left-0 w-full transition-all duration-500 ease-out opacity-0 translate-x-8 invisible pointer-events-none">
+          <h3 class="text-2xl font-bold text-[var(--ds-text)] font-display mb-4">Máquinas haciendo trabajo de máquinas</h3>
+          <p class="text-[var(--ds-muted)] leading-relaxed mb-4">
+            Conectamos tus sistemas actuales para que hablen entre sí. Si hoy necesitas descargar un Excel de un sistema para subirlo a otro, nosotros creamos el puente invisible que lo hace solo.
           </p>
+          <p class="text-[var(--ds-muted)] leading-relaxed mb-6">
+            Liberá a tu equipo de tareas repetitivas para que se concentren en lo que realmente aporta valor.
+          </p>
+          <ul class="flex flex-col gap-3">
+            <li class="flex items-start gap-2 text-sm text-[var(--ds-text)]">
+              <span class="text-[var(--ds-accent)]">&rarr;</span> Sincronización entre sistemas y CRMs
+            </li>
+            <li class="flex items-start gap-2 text-sm text-[var(--ds-text)]">
+              <span class="text-[var(--ds-accent)]">&rarr;</span> Notificaciones automáticas por WhatsApp o correo
+            </li>
+            <li class="flex items-start gap-2 text-sm text-[var(--ds-text)]">
+              <span class="text-[var(--ds-accent)]">&rarr;</span> Automatización de facturas y cobros recurrentes
+            </li>
+          </ul>
         </div>
-        <div class="relative mt-8 h-20 w-full overflow-hidden border border-[rgba(255,255,255,0.04)] rounded-lg bg-[rgba(11,15,19,0.5)] p-4 flex items-center justify-around">
-          <span class="rounded bg-white/5 px-2.5 py-1 text-xs border border-white/10 font-semibold">ERP local</span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 text-[var(--color-accent)] animate-pulse">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
-          <span class="rounded bg-[var(--color-accent)]/10 px-2.5 py-1 text-xs border border-[var(--color-accent)]/20 font-semibold text-[var(--color-accent)]">CRM Cloud</span>
-        </div>
+
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  /* Spotlighting glowing mask on Bento cards */
-  .bento-card {
-    background: radial-gradient(circle 200px at var(--glow-x, 50%) var(--glow-y, 50%), rgba(50, 255, 126, 0.05), transparent 70%), var(--color-surface);
-  }
-
-  .bento-glow {
-    background: radial-gradient(circle 100px at var(--glow-x, 50%) var(--glow-y, 50%), rgba(50, 255, 126, 0.25), transparent 60%);
-    pointer-events: none;
+  @media (prefers-reduced-motion: reduce) {
+    .tab-panel {
+      transition: none !important;
+      transform: none !important;
+    }
   }
 </style>
 
 <script>
-  const cards = document.querySelectorAll('.bento-card');
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
 
-  cards.forEach(cardElement => {
-    const card = cardElement as HTMLElement;
-    // Only track cursor spotlight on desktop/hover devices
-    const mediaQuery = window.matchMedia('(hover: hover)');
-    
-    if (mediaQuery.matches) {
-      card.addEventListener('mousemove', (e: any) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--glow-x', `${x}px`);
-        card.style.setProperty('--glow-y', `${y}px`);
+  tabBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      // Reset all buttons
+      tabBtns.forEach(b => {
+        b.setAttribute('aria-selected', 'false');
+        b.classList.remove('bg-[var(--ds-accent)]', 'text-black');
+        b.classList.add('text-[var(--ds-muted)]');
       });
-    }
+      // Activate clicked button
+      btn.setAttribute('aria-selected', 'true');
+      btn.classList.add('bg-[var(--ds-accent)]', 'text-black');
+      btn.classList.remove('text-[var(--ds-muted)]');
+
+      // Hide all panels
+      tabPanels.forEach(panel => {
+        panel.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+        
+        // Reset transform based on motion preference
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          panel.classList.add('translate-x-8');
+          panel.classList.remove('translate-x-0');
+        }
+      });
+
+      // Show target panel
+      const targetPanel = document.getElementById(btn.getAttribute('aria-controls') || '');
+      if (targetPanel) {
+        targetPanel.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          targetPanel.classList.remove('translate-x-8');
+          targetPanel.classList.add('translate-x-0');
+        }
+      }
+    });
   });
 </script>
