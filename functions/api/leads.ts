@@ -8,14 +8,27 @@ interface Env {
 const NEEDS = new Set(['backend', 'ai', 'ecommerce', 'optimization', 'not_sure']);
 const STAGES = new Set(['idea', 'existing', 'migration', 'critical']);
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const json = (body: object, status = 200) => new Response(JSON.stringify(body), {
-  status,
-  headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
-});
+const CSP_REPORT_ONLY = "default-src 'none'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'none'";
+const SECURITY_HEADERS: Record<string, string> = {
+  'cache-control': 'no-store',
+  'content-security-policy-report-only': CSP_REPORT_ONLY,
+  'permissions-policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()',
+  'referrer-policy': 'strict-origin-when-cross-origin',
+  'strict-transport-security': 'max-age=31536000; includeSubDomains',
+  'x-content-type-options': 'nosniff',
+  'x-frame-options': 'DENY',
+};
+const json = (body: object, status = 200, extraHeaders?: HeadersInit) => {
+  const headers = new Headers({ ...SECURITY_HEADERS, 'content-type': 'application/json; charset=utf-8' });
+  new Headers(extraHeaders).forEach((value, key) => headers.set(key, value));
+  return new Response(JSON.stringify(body), { status, headers });
+};
 const bounded = (value: unknown, min: number, max: number) =>
   typeof value === 'string' && value.trim().length >= min && value.trim().length <= max;
 
-export const onRequestPost = async ({ request, env }: { request: Request; env: Env }) => {
+type Context = { request: Request; env: Env };
+
+const handlePost = async ({ request, env }: Context) => {
   const origin = request.headers.get('origin');
   if (!origin || origin !== new URL(request.url).origin) return json({ error: 'Origin not allowed.' }, 403);
   if (!request.headers.get('content-type')?.toLowerCase().startsWith('application/json')) {
@@ -69,8 +82,15 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
       remoteip: request.headers.get('CF-Connecting-IP') ?? '' }),
     signal: AbortSignal.timeout(5_000),
   }).catch(() => null);
-  const challengeResult = await challenge?.json().catch(() => null) as { success?: boolean } | null;
-  if (!challengeResult?.success) return json({ error: 'Human verification failed.' }, challenge ? 403 : 503);
+  if (!challenge?.ok) return json({ error: 'Human verification unavailable.' }, 503);
+  const challengeResult = await challenge.json().catch(() => null) as {
+    success?: boolean; action?: string; hostname?: string;
+  } | null;
+  const expectedHostname = new URL(request.url).hostname;
+  if (challengeResult?.success !== true || challengeResult.action !== 'lead_submit' ||
+      challengeResult.hostname !== expectedHostname) {
+    return json({ error: 'Human verification failed.' }, 403);
+  }
   const clean = (key: string) => (body[key] as string).trim();
   const lead = {
     request_id: body.request_id,
@@ -109,3 +129,7 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
   const message = `*SOLICITUD DE DIAGNÓSTICO - DARKOSYNC*\n\n• *Nombre:* ${lead.name}\n• *Empresa:* ${lead.company}\n• *WhatsApp:* ${lead.phone}\n• *Email:* ${lead.email}\n\n• *Necesidad:* ${lead.need}\n• *Etapa:* ${lead.project_stage}\n• *Cuello de botella:* ${lead.bottleneck}`;
   return json({ whatsapp_url: `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}` });
 };
+
+export const onRequest = (context: Context) => context.request.method === 'POST'
+  ? handlePost(context)
+  : json({ error: 'Method not allowed.' }, 405, { allow: 'POST' });

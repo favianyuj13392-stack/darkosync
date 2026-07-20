@@ -19,6 +19,7 @@ interface TurnstileApi {
   render: (container: HTMLElement, options: {
     sitekey: string;
     theme: 'dark';
+    action: 'lead_submit';
     callback: (token: string) => void;
     'expired-callback': () => void;
     'error-callback': () => void;
@@ -48,6 +49,7 @@ export default function DiagnosticForm() {
   const [pending, setPending] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileLoadError, setTurnstileLoadError] = useState('');
   const requestId = useRef<string | null>(null);
   const turnstileContainer = useRef<HTMLDivElement | null>(null);
   const turnstileWidgetId = useRef<string | null>(null);
@@ -58,22 +60,32 @@ export default function DiagnosticForm() {
 
     let cancelled = false;
     let retryTimer: number | undefined;
+    const deadline = Date.now() + 5_000;
+    setTurnstileLoadError('');
 
     const renderTurnstile = () => {
       if (cancelled || turnstileWidgetId.current) return;
 
       const turnstile = (window as TurnstileWindow).turnstile;
       if (!turnstile || !turnstileContainer.current) {
-        retryTimer = window.setTimeout(renderTurnstile, 100);
+        if (Date.now() >= deadline) {
+          setTurnstileLoadError('No pudimos cargar la verificación. Intentá nuevamente o escribinos a darkosync@gmail.com.');
+          return;
+        }
+        retryTimer = window.setTimeout(renderTurnstile, 250);
         return;
       }
 
       turnstileWidgetId.current = turnstile.render(turnstileContainer.current, {
         sitekey: turnstileSiteKey,
         theme: 'dark',
-        callback: setTurnstileToken,
+        action: 'lead_submit',
+        callback: token => { setTurnstileToken(token); setTurnstileLoadError(''); },
         'expired-callback': () => setTurnstileToken(''),
-        'error-callback': () => setTurnstileToken(''),
+        'error-callback': () => {
+          setTurnstileToken('');
+          setTurnstileLoadError('La verificación falló. Intentá nuevamente o escribinos a darkosync@gmail.com.');
+        },
       });
     };
 
@@ -373,7 +385,8 @@ export default function DiagnosticForm() {
                 <span>Acepto que DarkoSync procese estos datos y comparta el diagn&oacute;stico y contacto enviados con WhatsApp/Meta para abrir la conversaci&oacute;n.</span>
               </label>
               {errors.consent && <span className="text-[10px] text-red-400 font-semibold">{errors.consent}</span>}
-              {turnstileSiteKey ? <div ref={turnstileContainer}></div> : <p role="alert" className="text-xs text-red-400">Verificaci&oacute;n no disponible.</p>}
+              {turnstileSiteKey ? <div ref={turnstileContainer} aria-label="Verificación de seguridad"></div> : <p role="alert" className="text-xs text-red-400">Verificaci&oacute;n no disponible.</p>}
+              {turnstileLoadError && <p role="alert" className="text-xs text-red-400">{turnstileLoadError}</p>}
               {submitError && <p role="alert" className="mt-4 text-xs text-red-400 font-semibold">{submitError}</p>}
             </div>
 
