@@ -20,6 +20,52 @@ import AmbientBackground from '../components/ui/AmbientBackground.astro';
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/png" href="/assets/favicon.PNG" />
     <title>{title}</title>
+    <link rel="canonical" href="https://darkosync.com/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://darkosync.com/" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://darkosync.com/assets/favicon.PNG" />
+    <meta property="og:site_name" content="DarkoSync" />
+    <meta property="og:locale" content="es_BO" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Schema.org JSON-LD for AI Search & Google Knowledge Graph -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://darkosync.com/#organization",
+          "name": "DarkoSync",
+          "url": "https://darkosync.com",
+          "logo": "https://darkosync.com/assets/favicon.PNG",
+          "description": "Desarrollo de software a medida, automatización operativa y soluciones digitales en Bolivia.",
+          "sameAs": [
+            "https://donatio.darkosync.com"
+          ],
+          "makesOffer": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "SoftwareApplication",
+                "name": "Donatio",
+                "url": "https://donatio.darkosync.com",
+                "applicationCategory": "BusinessApplication",
+                "description": "Plataforma SaaS de recaudación y gestión para organizaciones y fundaciones sin fines de lucro desarrollada por DarkoSync."
+              }
+            }
+          ]
+        }
+      ]
+    })} />
+
     <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   </head>
   <body>

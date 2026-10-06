@@ -36,12 +36,13 @@ const projects = [
   {
     id: "fundacion-nuestra-esperanza",
     title: "Fundación Nuestra Esperanza",
-    sector: "Fintech & ONG",
+    sector: "Fintech & ONG · Donatio SaaS",
     situation: "Dependencia de plataformas externas con altas comisiones y nula capacidad de personalización del diseño de la web.",
     bottleneck: "Conciliación manual lenta de donaciones por transferencia. Falta de emisión inmediata de certificados de donación deducibles de impuestos.",
-    solution: "Portal web autogestionable con CMS sin código. Pasarela QR integrada con la red bancaria nacional de Bolivia mediante webhooks en tiempo real, activando la generación de certificados en PDF firmados digitalmente.",
+    solution: "Implementación de Donatio (nuestra plataforma SaaS para gestión y recaudación de ONGs). Portal institucional con identidad propia, pasarela QR integrada a la red bancaria boliviana mediante webhooks en tiempo real y emisión automática de certificados en PDF firmados digitalmente.",
     results: "Notificación de transferencias en menos de 3 segundos. Campañas de recaudación modificadas en minutos sin tocar código.",
     link: "https://fundacion-nuestra-esperanza.cloud",
+    productLink: "https://donatio.darkosync.com",
     slides: [
       { img: "/assets/cases/donaciones-1.png", label: "Plataforma de inicio y campañas de donación personalizadas" },
       { img: "/assets/cases/donaciones-2.png", label: "Generador dinámico de códigos QR para aportes inmediatos" },
@@ -116,13 +117,22 @@ const projects = [
                 <p class="mt-2 text-sm text-[var(--ds-muted)] leading-relaxed">{p.situation}</p>
               </div>
 
-              {p.link !== "#" && (
-                <div class="mt-4">
-                  <a href={p.link} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--ds-accent)] hover:underline">
-                    Visitar sitio web <span>&rarr;</span>
-                  </a>
-                </div>
-              )}
+              <div class="mt-4 flex flex-col gap-2.5">
+                {p.link !== "#" && (
+                  <div>
+                    <a href={p.link} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--ds-accent)] hover:underline">
+                      Visitar sitio web <span>&rarr;</span>
+                    </a>
+                  </div>
+                )}
+                {p.productLink && (
+                  <div>
+                    <a href={p.productLink} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-white/90 hover:text-[var(--ds-accent)] transition-colors">
+                      Conocer plataforma Donatio <span>&nearr;</span>
+                    </a>
+                  </div>
+                )}
+              </div>
             </div>
 
             <!-- Detailed journey & Result -->
