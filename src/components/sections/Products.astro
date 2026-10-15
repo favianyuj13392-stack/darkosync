@@ -1,0 +1,213 @@
+---
+// src/components/sections/Products.astro
+---
+
+<section id="productos" class="relative py-24 md:py-32 ds-reveal">
+  <div class="mx-auto max-w-7xl px-6 md:px-8">
+    <!-- Header -->
+    <div class="max-w-3xl mb-16 md:mb-20">
+      <span class="text-xs font-semibold tracking-[0.15em] text-[var(--ds-accent)] uppercase">
+        PRODUCTO PROPIO · SAAS
+      </span>
+      <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-[var(--ds-text)] sm:text-4xl md:text-5xl leading-tight font-display">
+        Infraestructura de software desarrollada por DarkoSync
+      </h2>
+      <p class="mt-4 text-lg leading-relaxed text-[var(--ds-muted)]">
+        No solo desarrollamos sistemas a medida: creamos y operamos plataformas SaaS propietarias diseñadas para resolver problemas críticos de escala.
+      </p>
+    </div>
+
+    <!-- Product Card: Donatio -->
+    <div class="relative overflow-hidden rounded-3xl border border-[var(--ds-border)] bg-[var(--ds-surface)] p-8 md:p-12 lg:p-14 shadow-2xl transition-all duration-300">
+      <!-- Ambient Glows -->
+      <div class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-[var(--ds-accent)]/5 blur-3xl" aria-hidden="true"></div>
+      <div class="pointer-events-none absolute -left-24 -bottom-24 h-96 w-96 rounded-full bg-[var(--ds-accent)]/5 blur-3xl" aria-hidden="true"></div>
+
+      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+        <!-- Left: Product Info & Highlights -->
+        <div class="flex flex-col items-start lg:col-span-5">
+          <!-- Badge -->
+          <div class="inline-flex items-center gap-2 rounded-full border border-[var(--ds-accent)]/30 bg-[var(--ds-accent-dim)] px-3.5 py-1 text-xs font-semibold text-[var(--ds-accent)]">
+            <span class="h-1.5 w-1.5 rounded-full bg-[var(--ds-accent)] animate-pulse" aria-hidden="true"></span>
+            <span>SaaS Insignia · Fintech & ONGs</span>
+          </div>
+
+          <!-- Title -->
+          <h3 class="mt-4 text-4xl sm:text-5xl font-extrabold text-[var(--ds-text)] font-display tracking-tight">
+            Donatio
+          </h3>
+
+          <!-- Subtitle -->
+          <p class="mt-3 text-lg md:text-xl font-medium text-[var(--ds-text)]/90 leading-snug">
+            Plataforma integral de recaudación y gestión para organizaciones de impacto
+          </p>
+
+          <div class="my-6 h-px w-full bg-[var(--ds-border)]"></div>
+
+          <!-- Highlights / Bullet points -->
+          <ul class="flex flex-col gap-4 text-sm text-[var(--ds-muted)] leading-relaxed">
+            <li class="flex items-start gap-3">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--ds-accent)]/15 text-[var(--ds-accent)] font-bold text-xs" aria-hidden="true">
+                ✓
+              </span>
+              <span class="text-[var(--ds-text)]/90">
+                <strong class="font-semibold text-white">Pasarela QR bancaria en tiempo real</strong> e integración multi-moneda sin fricciones.
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--ds-accent)]/15 text-[var(--ds-accent)] font-bold text-xs" aria-hidden="true">
+                ✓
+              </span>
+              <span class="text-[var(--ds-text)]/90">
+                <strong class="font-semibold text-white">Checkout con identidad institucional propia (white-label)</strong> y trazabilidad completa.
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--ds-accent)]/15 text-[var(--ds-accent)] font-bold text-xs" aria-hidden="true">
+                ✓
+              </span>
+              <span class="text-[var(--ds-text)]/90">
+                <strong class="font-semibold text-white">Emisión automatizada de certificados</strong> y portal de fidelización de donantes.
+              </span>
+            </li>
+          </ul>
+
+          <!-- Note/Endorsement -->
+          <div class="mt-6 w-full rounded-xl border border-[var(--ds-border)] bg-[#07090C]/80 p-4">
+            <div class="flex items-start gap-3">
+              <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--ds-accent)]/10 text-[var(--ds-accent)]">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <div>
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-[var(--ds-muted)] block">Validación Operativa</span>
+                <p class="text-xs sm:text-sm font-medium text-[var(--ds-text)] mt-0.5">
+                  Plataforma implementada y validada para Fundación Nuestra Esperanza.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA button -->
+          <div class="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full">
+            <a
+              href="https://donatio.darkosync.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group relative inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--ds-accent)] px-7 py-3.5 text-sm font-bold text-black shadow-lg shadow-[var(--ds-accent)]/20 transition-all duration-300 hover:bg-white hover:shadow-[var(--ds-accent)]/30 focus:outline-none focus:ring-2 focus:ring-[var(--ds-accent)] focus:ring-offset-2 focus:ring-offset-[var(--ds-bg)]"
+            >
+              <span>Conocer Donatio SaaS</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true">
+                <path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h4a.75.75 0 010 1.5h-4z" clip-rule="evenodd" />
+                <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.156 8.497a.75.75 0 00-.053 1.06z" clip-rule="evenodd" />
+              </svg>
+            </a>
+            <span class="text-xs text-[var(--ds-muted)] text-center sm:text-left">
+              donatio.darkosync.com
+            </span>
+          </div>
+        </div>
+
+        <!-- Right: Editorial Dashboard / Mockup Visual Panel -->
+        <div class="lg:col-span-7">
+          <div class="relative rounded-2xl border border-[var(--ds-border)] bg-[#07090C] p-4 sm:p-6 shadow-2xl overflow-hidden">
+            <!-- Window header -->
+            <div class="flex items-center justify-between border-b border-[var(--ds-border)] pb-4 mb-5">
+              <div class="flex items-center gap-2">
+                <span class="h-3 w-3 rounded-full bg-[#FF5F56]/80" aria-hidden="true"></span>
+                <span class="h-3 w-3 rounded-full bg-[#FFBD2E]/80" aria-hidden="true"></span>
+                <span class="h-3 w-3 rounded-full bg-[#27C93F]/80" aria-hidden="true"></span>
+                <span class="ml-3 hidden sm:inline-block text-xs font-mono text-[var(--ds-muted)]">
+                  donatio.darkosync.com/dashboard
+                </span>
+              </div>
+              <div class="flex items-center gap-2 rounded-full border border-[var(--ds-border)] bg-[#0C0F12] px-2.5 py-1">
+                <span class="h-2 w-2 rounded-full bg-[var(--ds-accent)] animate-ping" aria-hidden="true"></span>
+                <span class="text-[10px] font-mono font-medium text-[var(--ds-accent)] uppercase">
+                  API QR Bancaria Activa
+                </span>
+              </div>
+            </div>
+
+            <!-- Dashboard Metric Pills -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
+              <div class="rounded-xl border border-[var(--ds-border)] bg-[#0C0F12] p-3">
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-[var(--ds-muted)] block">Acreditación QR</span>
+                <span class="text-lg sm:text-xl font-bold text-[var(--ds-accent)] font-mono">&lt; 3 seg</span>
+              </div>
+              <div class="rounded-xl border border-[var(--ds-border)] bg-[#0C0F12] p-3">
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-[var(--ds-muted)] block">Certificados PDF</span>
+                <span class="text-lg sm:text-xl font-bold text-white font-mono">100% Auto</span>
+              </div>
+              <div class="col-span-2 sm:col-span-1 rounded-xl border border-[var(--ds-border)] bg-[#0C0F12] p-3">
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-[var(--ds-muted)] block">Modalidad</span>
+                <span class="text-lg sm:text-xl font-bold text-white font-mono">White-Label</span>
+              </div>
+            </div>
+
+            <!-- Main Mockup Graphic -->
+            <div class="relative rounded-xl border border-[var(--ds-border)] bg-[#0A0C0F] overflow-hidden group">
+              <!-- Primary Screenshot -->
+              <img
+                src="/assets/cases/donaciones-1.png"
+                alt="Vista previa de Donatio SaaS - Portal de recaudación y campañas institucionales"
+                class="w-full h-auto object-cover opacity-85 transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                loading="lazy"
+                width="1200"
+                height="675"
+              />
+
+              <!-- Floating Live Verification Card -->
+              <div class="absolute bottom-3 right-3 left-3 sm:left-auto sm:max-w-xs rounded-xl border border-[var(--ds-accent)]/30 bg-[#0E1115]/95 p-3.5 backdrop-blur-md shadow-2xl">
+                <div class="flex items-center gap-2 mb-1.5">
+                  <span class="h-2 w-2 rounded-full bg-[var(--ds-accent)]" aria-hidden="true"></span>
+                  <span class="text-[11px] font-bold text-white uppercase tracking-wider">Conciliación en tiempo real</span>
+                </div>
+                <p class="text-xs text-[var(--ds-muted)]">
+                  Webhook bancario recibido. Emisión de comprobante con firma digital enviada al donante al instante.
+                </p>
+                <div class="mt-2.5 flex items-center justify-between border-t border-[var(--ds-border)] pt-2 text-[10px] font-mono text-[var(--ds-accent)]">
+                  <span>STATUS: 200 OK</span>
+                  <span>LATENCY: 240ms</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Secondary Feature Thumbnails -->
+            <div class="mt-4 grid grid-cols-2 gap-3">
+              <div class="relative overflow-hidden rounded-lg border border-[var(--ds-border)] bg-[#0A0C0F]">
+                <img
+                  src="/assets/cases/donaciones-2.png"
+                  alt="Generador dinámico de códigos QR bancarios en Donatio"
+                  class="h-24 sm:h-28 w-full object-cover opacity-75 hover:opacity-100 transition-opacity"
+                  loading="lazy"
+                  width="400"
+                  height="225"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2">
+                  <span class="text-[10px] font-medium text-white/90">Checkout con QR dinámico</span>
+                </div>
+              </div>
+
+              <div class="relative overflow-hidden rounded-lg border border-[var(--ds-border)] bg-[#0A0C0F]">
+                <img
+                  src="/assets/cases/donaciones-3.png"
+                  alt="Panel administrativo CMS de Donatio"
+                  class="h-24 sm:h-28 w-full object-cover opacity-75 hover:opacity-100 transition-opacity"
+                  loading="lazy"
+                  width="400"
+                  height="225"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2">
+                  <span class="text-[10px] font-medium text-white/90">Panel de control CMS</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

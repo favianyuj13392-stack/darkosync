@@ -37,7 +37,7 @@ import AmbientBackground from '../components/ui/AmbientBackground.astro';
     <meta name="twitter:description" content={description} />
 
     <!-- Schema.org JSON-LD for AI Search & Google Knowledge Graph -->
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@graph": [
         {
